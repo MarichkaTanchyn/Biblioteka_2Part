@@ -1,0 +1,33 @@
+<%- include('../../fragments/header.ejs') %>
+
+<h2>Edycja Zatrudnienia</h2>
+<form class="form" action="./list.ejs">
+  <label for="nazwa">Nazwa:<span id="errorName"> *</span></label>
+  <input input="text" name="nazwa" id="nazwa" value=" Epik" required />
+  
+  <label for="amountofEmp"
+    >Ilość pracujących: <span id="errorAmountofEmp"> *</span></label
+  >
+
+  <input
+    input="number"
+    name="amountofEmp"
+    id="amountofEmp"
+    value=" 4"
+    required
+  />
+  <label for="dateOfStart">Data: <span id="errorDateOfStart"> *</span></label>
+
+  <input
+    input="date"
+    name="dateOfStart"
+    id="dateOfStart"
+    value=" 24.09.2018"
+    type="date" 
+    required
+  />
+    <input class="button" type="submit" value="Zatwierdź" />
+    <a class="button" href="list.ejs">Anuluj</a>
+  
+</form>
+<%- include('../../fragments/footer.ejs') %>

@@ -1,0 +1,72 @@
+<%- include('../../fragments/header.ejs') %>
+
+<h2>Lista pracowników</h2>
+<table class="table-list">
+  <thead>
+    <tr>
+      <th>Imię</th>
+      <th>Nazwisko</th>
+      <th>E-mail</th>
+      <th>Akcje</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Jan</td>
+      <td>Kowalski</td>
+      <td>jan.kowalski@pb.com</td>
+      <td>
+        <ul class="list-actions">
+          <li>
+            <a class="button-details" href="">Szczegóły</a>
+          </li>
+          <li>
+            <a class="button-edit" href="/employments/edit/<%= doc.id %>">Edytuj</a>
+          </li>
+          <li>
+            <a class="button-delete" href="" onclick="alertAfterDelete()">Usuń</a>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Atom</td>
+      <td>Kwantowycz</td>
+      <td>atom.kwantowycz@pb.com</td>
+      <td>
+        <ul class="list-actions">
+          <li>
+            <a class="button-details" href="">Szczegóły</a>
+          </li>
+          <li>
+            <a class="button-edit" href="/employments/edit/<%= doc.id %>">Edytuj</a>
+          </li>
+          <li>
+            <a class="button-delete" href="" onclick="alertAfterDelete()">Usuń</a>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Andre</td>
+      <td>Tan</td>
+      <td>andre.tan@pb.com</td>
+      <td>
+        <ul class="list-actions">
+          <li>
+            <a class="button-details" href="">Szczegóły</a>
+          </li>
+          <li>
+            <a class="button-edit" href="/employments/edit/<%= doc.id %>">Edytuj</a>
+          </li>
+          <li>
+            <a class="button-delete" href="" onclick="alertAfterDelete()">Usuń</a>
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="button-submit"><a class="a-in-button" href="/employments/add">Dodaj nowe zatrudnienie</a></p>
+
+<%- include('../../fragments/footer.ejs') %>

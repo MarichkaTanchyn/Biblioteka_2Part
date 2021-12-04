@@ -1,0 +1,75 @@
+<%- include('../../fragments/header.ejs') %>
+
+  <h2>Departamenty</h2>
+  <table class="table-list">
+    <thead>
+      <tr>
+        <th>Nazwa</th>
+        <th>Ilość pracujących</th>
+        <th>Data stworzenia</th>
+        <th>Akcje</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Epika</td>
+        <td>3</td>
+        <td>22.08.2015</td>
+        <td>
+          <ul class="list-actions">
+            <li>
+              <a class="button-details" href="">Szczegóły</a>
+            </li>
+            <li>
+              <a class="button-edit" href="form-edit.ejs">Edytuj</a>
+            </li>
+            <li>
+              <a class="button-delete" href="" onclick="alertAfterDelete()">Usuń</a>
+            </li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Liryka</td>
+        <td>2</td>
+        <td>23.09.2014</td>
+        <td>
+          <ul class="list-actions">
+            <li>
+              <a class="button-details" href="">Szczegóły</a>
+            </li>
+            <li>
+              <a class="button-edit" href="form-edit.ejs">Edytuj</a>
+            </li>
+            <li>
+              <a class="button-delete" href="" onclick="alertAfterDelete()">Usuń</a>
+            </li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>Dramat</td>
+        <td>4</td>
+        <td>02.02.2015</td>
+        <td>
+          <ul class="list-actions">
+            <li>
+              <a class="button-details" href="">Szczegóły</a>
+            </li>
+            <li>
+              <a class="button-edit" href="form-edit.ejs">Edytuj</a>
+            </li>
+            <li>
+              <a class="button-delete" href="" onclick="function myFunction() {
+                alert('Rekord zostal usunienty');
+                 }
+                 myFunction()">Usuń</a>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="button-submit"><a class="a-in-button" href="/emloyees/add">Dodaj nowy departament</a></p>
+
+<%- include('../../fragments/footer.ejs') %>

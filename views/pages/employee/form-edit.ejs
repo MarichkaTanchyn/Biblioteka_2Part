@@ -1,0 +1,38 @@
+<%- include('../../fragments/header.ejs') %>
+
+<script type="application/javascript" src="/js/validationCommon.js"></script>
+<script
+  type="application/javascript"
+  src="/js/validationEmployeeForm.js"
+></script>
+<h2><%= pageTitle %></h2>
+
+<form class="form" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
+  <input type="hidden" name="id" value="<%= employee.id %>">
+
+  <label for="firstName">Imię:<span id="errorFirstName"> *</span></label>
+  <input input="text" name="firstName" id="firstName" value="<%= employee.person.name %>" required />
+  <label for="lastName">Nazwisko: <span id="errorLastName"> *</span></label>
+
+  <input
+    input="text"
+    name="lastName"
+    id="lastName"
+    value="<%= employee.person.lastName %>"
+    required
+  />
+  <label for="email">E-mail: <span id="errorEmail"> *</span></label>
+
+  <input
+    input="email"
+    name="email"
+    id="email"
+    value="<%= employee.person.email %>" 
+    required
+  />
+
+  <input class="button" type="submit" value="Zatwierdź" />
+  <a class="button" href="/employees">Anuluj</a>
+</form>
+
+<%- include('../../fragments/footer.ejs') %>

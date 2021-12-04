@@ -1,0 +1,27 @@
+<%- include('../../fragments/header.ejs') %>
+
+<h2>Nowy Departament</h2>
+<form class="form" action="./list.ejs">
+
+  <label for="nazwa">Nazwa:<span class="symbol-required">*</span></label>
+  <input type="text" name="nazwa" id="nazwa" required />
+  <span id="errorDepartmentName"></span>
+
+  <label for="amountofEmp"
+    >Ilość pracujących: <span class="symbol-required">*</span></label
+  >
+  <input type="number" name="amountofEmp" id="amountofEmp" required />
+  <span id="errorAmountofEmp"></span>
+
+  <label for="dateOfStart"
+    >Data: <span class="symbol-required">*</span></label
+  >
+  <input type="date" name="dateOfStart" id="dateOfStart" required />
+  <span id="errorDateOfStart" class="errors-text"></span>
+  
+    <input type="submit" class="button" value="Dodaj" />
+    <a class="button" href="list.ejs">Anuluj</a>
+  
+</form>
+
+<%- include('../../fragments/footer.ejs') %>

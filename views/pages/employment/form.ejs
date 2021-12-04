@@ -1,0 +1,19 @@
+<%- include('../../fragments/header.ejs') %>
+
+<h2>Nowe Zatrudnienie</h2>
+<form class="form" action="./listOfEmployed.ejs" onsubmit="return validateForm();">
+  <label for="firstName">Imię:<span class="symbol-required">*</span></label>
+  <input input="text" name="firstName" id="firstName" required />
+  <span id="errorFirstName"></span>
+
+  <label for="lastName">Nazwisko: <span class="symbol-required">*</span></label>
+  <input input="text" name="lastName" id="lastName" required />
+  <span id="errorLastName"></span>
+  <label for="email">E-mail: <span class="symbol-required">*</span></label>
+  <input input="email" name="email" id="email" required />
+  <span id="errorEmail"></span>
+  <input type="submit" class="button"  value="Dodaj" />
+  <a class="button" href="/employments">Anuluj</a>
+</form>
+
+<%- include('../../fragments/footer.ejs') %>

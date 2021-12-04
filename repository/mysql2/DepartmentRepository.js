@@ -1,0 +1,76 @@
+const db = require("../../config/mysql2/db");
+
+
+exports.getDepartment = () => {
+    return db
+        .promise()
+        .query("SELECT * FROM Department")
+        .then((results, fields) => {
+            console.log(results[0]);
+            return results[0];
+        })
+        .catch((err) => {
+            console.log(err);
+            throw err;
+        });
+};
+//TODO: GET DEPARTMENT BY ID
+
+exports.getDepartmentById = () => {
+    const query = "SELECT dept.Dept_id as dept.id, dept.Name, dept.NumOfWorkers, dept.DateOfStert, empl.Dept_id as dept_id,"
+        + "empl.PhoneNumber, empl.DataOd, dept.NumOfWorkers, empl.Employee_id as emp_id"
+        + "FROM Department dept"
+        + "left join Employment empl on empl.Department_id = dept.Department_id"
+        + "left join Employee e on empl.Employee_id = e.Employee_id"
+        + "where dept.Dept_id = ?";
+    return db.promise().query(query, [deptId])
+        .then((results, fields) => {
+            const firstRow = results[0][0];
+            if (!firstRow) {
+                return {};
+            }
+            const dept = {
+                id: parseInt(deptId),
+                Name: firstRow.Name,
+                NumOfWorkers: firstRow.NumOfWorkers,
+                DateOfStert: firstRow.DateOfStert,
+                departments: []
+            }
+            // for (let i = 0; i < results[0].length; i++) {
+            //     const row = results[0][i];
+            //     if (row.emp_id) {
+            //         const empls = {
+            //             id: row.dept_id,
+            //             phoneNumber:row.PhoneNumber,
+            //
+            //         };
+            //         dept.departments.push(zakpy);
+            //
+            //     }
+            // }
+            return emp;
+        }).catch(err => {
+            console.log(err);
+            throw err;
+        });
+};
+
+exports.createDepartment = (newDepartmentData) => {
+    const id = newDepartmentData.id;
+    const name = newDepartmentData.Name;
+    const numOfWorkers = newDepartmentData.NumOfWorkers;
+    const dateOfStert = newDepartmentData.DateOfStert;
+    const sql = "INSERT INTO Department (Department_id ,Name, NumOfWorkers, DateOfStert) VALUES (?,?,?,?);"
+    return db.promise().execute(sql, [id, name, numOfWorkers, dateOfStert]);
+};
+exports.updateDepartment = (deptId, deptDate) => {
+    const name = deptDate.Name;
+    const numOfWorkers = deptDate.NumOfWorkers;
+    const dateOfStert = deptDate.DateOfStert;
+    const sql = "UPDATE Department SET Name = ?, numOfWorkers = ?, DateOfStert = ?, WHERE Department_id = ?;"
+    return db.promise().execute(sql, [name, numOfWorkers, dateOfStert, deptId]);
+};
+exports.deleteDepartment = (deptId) => {
+    const sql = "DELETE FROM Department WHERE Department_id = ?";
+    return db.promise().execute(sql, [deptId]);
+}

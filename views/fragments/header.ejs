@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Biblioteka BP</title>
+    <link rel="shortcut icon" href="../../Images/jogo2.png" />
+    <link rel="stylesheet" href="../../css/form.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="main-header">
+        <img src="../../Images/jogo2.png" alt="Bibliotekas logo" class="logo" />
+        <h1>Nowa Biblioteka</h1>
+      </div>
+    </header>
+    <div class="main-image">
+      <img src="../../Images/books.jpeg" alt="bookcase full of books" />
+    </div>
+    <nav class="navbar">
+      <ul>
+        <li class="<%= navLocation == 'main' ? 'active' : '' %>"><a href="/">Strona główna</a></li>
+        <li>
+          <a href="/employees" class="<%= navLocation == 'emp' ? 'active' : '' %>">Pracownicy</a>
+        </li>
+        <li><a href="/departments" class="<%= navLocation == 'dept' ? 'active' : '' %>">Departamenty</a></li>
+        <li><a href="/employments" class="<%= navLocation == 'employment' ? 'active' : '' %>">Zatrudnienie</a></li>
+      </ul>
+    </nav>
+    <main class="main">

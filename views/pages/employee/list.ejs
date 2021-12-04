@@ -1,0 +1,56 @@
+<%- include('../../fragments/header.ejs') %>
+
+<!-- <h2>Lista pracowników</h2> -->
+<h2>
+  <%= pageTitle %>
+</h2>
+<% if (employees !=0) { %>
+
+<table class="table-list">
+  <thead>
+    <tr>
+      <th scope="col">Imię</th>
+      <th scope="col">Nazwisko</th>
+      <th scope="col">E-mail</th>
+      <th scope="col">Akcje</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for (let emp of employees) { %>
+    <tr>
+      <td><%= emp.person.name %></td>
+      <td><%= emp.person.lastname %></td>
+      <td><%= emp.person.email %></td>
+      <td>
+        <ul class="list-actions">
+          <li>
+            <a class="button-details" href="">Szczegóły</a>
+          </li>
+          <li>
+            <a class="button-edit" href="form-edit.ejs">Edytuj</a>
+          </li>
+          <li>
+            <a
+            class="button-delete"
+            href=""
+            onclick="function alertAfterDelete() {
+            if (confirm('Czy napewno chcesz usunąć Pracownika?'))
+                alert('Usunałeś pracownika!');
+            }
+          alertAfterDelete()">Usuń</a>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <% } %>
+  </tbody>
+</table>
+<% } else { %>
+  <p>The list is empty. Try to add new employee!</p>
+<p class="button-submit">
+  <a class="a-in-button" href="/employees/add">Dodaj nowego pracownika</a>
+</p>
+<% } %>
+
+<%- include('../../fragments/footer.ejs') %>
