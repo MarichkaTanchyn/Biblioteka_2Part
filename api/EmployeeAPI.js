@@ -1,7 +1,7 @@
 const EmployeeRepository = require('../repository/mysql2/EmployeeRepository');
 
 exports.getEmployees = (reg, res, next) => {
-    EmployeeRepository.getEmployee()
+    EmployeeRepository.getEmployees()
         .then(emps => {
             res.status(200).json(emps);
         })
@@ -9,6 +9,7 @@ exports.getEmployees = (reg, res, next) => {
             console.log(err);
         });
 };
+
 exports.getEmployeeById = (req, res, next) => {
     const empId = req.params.empId;
     EmployeeRepository.getEmployeeById(empId)
@@ -44,6 +45,7 @@ exports.updateEmployee = (req, res, next) => {
             if (!err.statusCode) {
                 err.statusCode = 500;
             }
+
             next(err);
         });
 };

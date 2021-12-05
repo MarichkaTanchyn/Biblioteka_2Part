@@ -1,12 +1,8 @@
 const db = require("../../config/mysql2/db");
 
 
-exports.getEmployment = () => {
-    const query = "SELECT empl.Employment_id as empl_id, empl.DataOd, empl.PhoneNumber, dept.Name, dept.NumOfWorkers, dept.DateOfStert, empl.Dept_id as dept_id,\n" +
-        "empl.Employee_id as emp_id,e.Name, e.LastName, e.Email\n" +
-        "FROM Employment empl\n" +
-        "left join Department dept on dept.Dept_id = empl.Dept_id\n" +
-        "left join Employee e on e.Employee_id = empl.Employee_id";
+exports.getEmployments = () => {
+    const query = "SELECT empl.Employment_id as empl_id, empl.DataOd, empl.PhoneNumber, dept.Name as DeptName, dept.NumOfWorkers, dept.DateOfStert, empl.Dept_id as dept_id,empl.Employee_id as emp_id,e.Name as EmpName, e.LastName, e.Email FROM Employment empl left join Department dept on dept.Dept_id = empl.Dept_id left join Employee e on e.Employee_id = empl.Employee_id";
     return db.promise().query(query)
         .then((results, fields) => {
             const employments = [];
@@ -18,12 +14,12 @@ exports.getEmployment = () => {
                     PhoneNumber: row.PhoneNumber,
                     department: {
                         id: row.dept_id,
-                        Name: row.Name,
+                        DeptName: row.DeptName,
                         NumOfWorkers: row.NumOfWorkers,
                         DateOfStert: row.DateOfStert
                     },
                     employee: {
-                        Name: row.Name,
+                        EmpName: row.EmpName,
                         LastName: row.LastName,
                         Email: row.Email
                     }
@@ -38,35 +34,30 @@ exports.getEmployment = () => {
 };
 
 exports.getEmploymentById = (employmentId) => {
-    const query = "SELECT empl.Employment_id as empl_id, empl.DataOd, empl.PhoneNumber, dept.Name, dept.NumOfWorkers, dept.DateOfStert, empl.Dept_id as dept_id,\n" +
-        "empl.Employee_id as emp_id,e.Name, e.LastName, e.Email\n" +
-        "FROM Employment empl\n" +
-        "left join Department dept on dept.Dept_id = empl.Dept_id\n" +
-        "left join Employee e on e.Employee_id = empl.Employee_id\n" +
-        "where empl.Employment_id = ?";
+    const query = "SELECT empl.Employment_id as empl_id, empl.DataOd, empl.PhoneNumber, dept.Name as DeptName, dept.NumOfWorkers, dept.DateOfStert, empl.Dept_id as dept_id,empl.Employee_id as emp_id,e.Name as EmpName, e.LastName, e.Email FROM Employment empl left join Department dept on dept.Dept_id = empl.Dept_id left join Employee e on e.Employee_id = empl.Employee_id where empl.Employment_id = ?";
     return db.promise().query(query, [employmentId])
         .then((results, fields) => {
-            const firstRow = results[0][0];
-            if (!firstRow) {
+            const row = results[0][0];
+            if (!row) {
                 return {};
             }
-                const employment = {
-                    id: employmentId,
-                    DataOd: row.DataOd,
-                    PhoneNumber: row.PhoneNumber,
-                    department: {
-                        id: row.dept_id,
-                        Name: row.Name,
-                        NumOfWorkers: row.NumOfWorkers,
-                        DateOfStert: row.DateOfStert
-                    },
-                    employee: {
-                        Name: row.Name,
-                        LastName: row.LastName,
-                        Email: row.Email
-                    }
-                };
-                console.log(employment);
+            const employment = {
+                id: employmentId,
+                DataOd: row.DataOd,
+                PhoneNumber: row.PhoneNumber,
+                department: {
+                    id: row.dept_id,
+                    Name: row.Name,
+                    NumOfWorkers: row.NumOfWorkers,
+                    DateOfStert: row.DateOfStert
+                },
+                employee: {
+                    EmpName: row.EmpName,
+                    LastName: row.LastName,
+                    Email: row.Email
+                }
+            };
+            // console.log(employment);
 
             return employment;
         }).catch(err => {

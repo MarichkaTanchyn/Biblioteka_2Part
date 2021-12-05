@@ -5,4 +5,7 @@ router.get('/',employeeController.showEmployeeList);
 router.get('/add',employeeController.showAddEmployeeForm);
 router.get('/details/:empId',employeeController.showEmployeeDetails);
 router.get('/edit/:empId', employeeController.showEditEmployee);
+router.post("/",employeeController.addEmployee);
+router.delete("/", employeeController.deleteEmployee);
+
 module.exports = router;
