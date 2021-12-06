@@ -1,14 +1,57 @@
+const repository = require('../repository/mysql2/DepartmentRepository');
+
 exports.showDeptList = (req,res,next) => {
-    res.render('pages/department/list', {navLocation: 'dept'});
+    repository.getDepartmentsWithEmployees()
+        .then(deps => {
+            res.render('pages/department/list',
+                {
+                    deps: deps,
+                    navLocation: 'dept',
+                    pageTitle: "Lista Departamentów"
+            });
+
+        })
 }
 exports.showAddDeptForm = (req,res,next) => {
-    res.render('pages/department/form', {navLocation: 'dept'});
+    res.render('pages/department/form',
+        {
+            dept: {},
+            pageTitle: "Nowy Departament",
+            formMode: 'createNew',
+            btnLabel: "Dodaj Departament",
+            formAction: '/departments/add',
+            navLocation: 'dept'
+        });
 }
 exports.showDeptDetails = (req,res,next) => {
-    res.render('', {navLocation: 'dept'});
+    const id = req.params.deptId;
+    repository.getDepartmentById(id)
+        .then(dept => {
+            res.render('pages/department/form',
+                {
+                    dept: dept,
+                    formMode: 'showDetails',
+                    formAction: '',
+                    navLocation: 'dept',
+                    pageTitle: 'Szczegóły Departamenta'
+                });
+        });
 }
-exports.showDept = (req,res,next) => {
-    res.render('pages/department/form-edit', {navLocation: 'dept'});
+exports.showEditDept = (req,res,next) => {
+    const id = req.params.deptId;
+    repository.getDepartmentById(id)
+        .then(dept => {
+            res.render('pages/department/form',
+                {
+                    dept: dept,
+                    navLocation: 'dept',
+                    pageTitle: 'Edycja Departamenta',
+                    btnLabel: 'Edytuj Departamenta',
+                    formMode: 'edit',
+                    formAction: '/departments/edit'
+                });
+        });
+
 }
 //
 // exports.addDept = async (req, res, next) => {

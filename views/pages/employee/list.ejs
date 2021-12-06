@@ -1,52 +1,39 @@
 <%- include('../../fragments/header.ejs') %>
 
-<h2>Lista pracowników</h2>
+<h2>
+  <%= pageTitle %>
+</h2>
+
 <table class="table-list">
   <thead>
   <tr>
-    <th>Imię</th>
-    <th>Nazwisko</th>
-    <th>E-mail</th>
-    <th>Akcje</th>
+    <th scope="col">Imię</th>
+    <th scope="col">Nazwisko</th>
+    <th scope="col">E-mail</th>
+    <th scope="col">Akcje</th>
   </tr>
   </thead>
   <tbody>
+  <% for (let emp of emps) { %>
   <tr>
-    <td>Jan</td>
-    <td>Kowalski</td>
-    <td>jan.kowalski@pb.com</td>
+    <td><%= emp.Name %></td>
+    <td><%= emp.LastName %></td>
+    <td><%= emp.Email %></td>
     <td>
       <ul class="list-actions">
         <li>
-          <a class="button-details" href="">Szczegóły</a>
+          <a class="button-details" href="/employees/details/<%=emp.Employee_id%>">Szczegóły</a>
         </li>
         <li>
-          <a class="button-edit" href="/employees/edit">Edytuj</a>
+          <a class="button-edit" href="/employees/edit/<%=emp.Employee_id %>">Edytuj</a>
         </li>
         <li>
-          <a class="button-delete" href="" onclick="alertAfterDelete()">Usuń</a>
+          <a class="button-delete" href="/employees/delete/<%=emp.Employee_id %>">Usuń</a>
         </li>
       </ul>
     </td>
   </tr>
-  <tr>
-    <td>Atom</td>
-    <td>Kwantowycz</td>
-    <td>atom.kwantowycz@pb.com</td>
-    <td>
-      <ul class="list-actions">
-        <li>
-          <a class="button-details" href="">Szczegóły</a>
-        </li>
-        <li>
-          <a class="button-edit" href="/employees/edit">Edytuj</a>
-        </li>
-        <li>
-          <a class="button-delete" href="" onclick="alertAfterDelete()">Usuń</a>
-        </li>
-      </ul>
-    </td>
-  </tr>
+  <% } %>
   </tbody>
 </table>
 <p class="button-submit"><a class="a-in-button" href="/employees/add">Dodaj nowego pracownika</a></p>

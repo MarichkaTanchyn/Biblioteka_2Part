@@ -12,18 +12,19 @@ exports.getEmployments = () => {
                     id: row.empl_id,
                     DataOd: row.DataOd,
                     PhoneNumber: row.PhoneNumber,
-                    department: {
-                        id: row.dept_id,
-                        DeptName: row.DeptName,
-                        NumOfWorkers: row.NumOfWorkers,
-                        DateOfStert: row.DateOfStert
-                    },
                     employee: {
                         EmpName: row.EmpName,
                         LastName: row.LastName,
                         Email: row.Email
+                    },
+                    department: {
+                        id: row.dept_id,
+                        DeptName: row.DeptName,
+                        NumOfWorkers: row.NumOfWorkers,
+                        DateOfStart: row.DateOfStert
                     }
                 };
+
                 employments.push(employment);
             }
             return employments;
@@ -37,34 +38,35 @@ exports.getEmploymentById = (employmentId) => {
     const query = "SELECT empl.Employment_id as empl_id, empl.DataOd, empl.PhoneNumber, dept.Name as DeptName, dept.NumOfWorkers, dept.DateOfStert, empl.Dept_id as dept_id,empl.Employee_id as emp_id,e.Name as EmpName, e.LastName, e.Email FROM Employment empl left join Department dept on dept.Dept_id = empl.Dept_id left join Employee e on e.Employee_id = empl.Employee_id where empl.Employment_id = ?";
     return db.promise().query(query, [employmentId])
         .then((results, fields) => {
-            const row = results[0][0];
-            if (!row) {
-                return {};
-            }
-            const employment = {
-                id: employmentId,
-                DataOd: row.DataOd,
-                PhoneNumber: row.PhoneNumber,
-                department: {
-                    id: row.dept_id,
-                    Name: row.Name,
-                    NumOfWorkers: row.NumOfWorkers,
-                    DateOfStert: row.DateOfStert
-                },
-                employee: {
-                    EmpName: row.EmpName,
-                    LastName: row.LastName,
-                    Email: row.Email
+                const row = results[0][0];
+                if (!row) {
+                    return {};
                 }
-            };
-            // console.log(employment);
+                const empl = {
+                    id: parseInt(employmentId),
+                    DataOd: row.DataOd,
+                    PhoneNumber: row.PhoneNumber,
+                    employee: {
+                        EmpName: row.EmpName,
+                        LastName: row.LastName,
+                        Email: row.Email
+                    },
+                    department: {
+                        id: row.dept_id,
+                        DeptName: row.DeptName,
+                        NumOfWorkers: row.NumOfWorkers,
+                        DateOfStart: row.DateOfStert
+                    }
+                }
 
-            return employment;
-        }).catch(err => {
+                return empl;
+            }
+        ).catch(err => {
             console.log(err);
             throw err;
         });
-};
+}
+;
 
 exports.createEmployment = (newEmploymentData) => {
     const id = newEmploymentData.id;

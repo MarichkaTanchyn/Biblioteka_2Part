@@ -3,6 +3,6 @@ const router = express.Router();
 const employmentController = require('../controllers/employmentController');
 router.get('/',employmentController.showEmploymentList);
 router.get('/add',employmentController.showAddEmploymentForm);
-router.get('/details/:empId',employmentController.showEmploymentDetails);
-router.get('/edit/:empId', employmentController.showEditEmployment);
+router.get('/details/:emplId',employmentController.showEmploymentDetails);
+router.get('/edit/:emplId', employmentController.showEditEmployment);
 module.exports = router;

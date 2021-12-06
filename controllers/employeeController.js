@@ -1,50 +1,54 @@
 const repository = require('../repository/mysql2/EmployeeRepository');
 
 exports.showEmployeeList = (req,res,next) => {
-    // repository.getEmployees()
-    //     .then(employees => {
-    //         console.log(employees);
+    repository.getEmployees()
+        .then(emps => {
             res.render('pages/employee/list',
                 {
-                    // employees: employees,
-                    navLocation: 'emp'
+                    emps: emps,
+                    navLocation: 'emp',
+                    pageTitle: "Lista pracowników"
                 });
-        // });
+        });
 }
 exports.showAddEmployeeForm = (req,res,next) => {
     res.render('pages/employee/form',{
+        emp: {},
         navLocation: 'emp',
-        // pageTitle: 'Dodaj Pracownika',
-        // doctor: {},
-        // btnLable: 'Dodaj Pracownika',
-        // formAction: '/employees/add',
-        // errors: null
+        pageTitle: 'Nowy Pracownik',
+        formMode: 'createNew',
+        btnLabel: "Dodaj Pracownika",
+        formAction: '/employees/add',
     });
 }
 exports.showEmployeeDetails = (req,res,next) => {
-    // const id = req.params.id;
-    // repository.getEmployeeById(id)
-    //     .then(employee => {
-            res.render('',
+    const id = req.params.empId;
+    repository.getEmployeeById(id)
+        .then(emp => {
+            res.render('pages/employee/form',
                 {
+                    emp: emp,
+                    formMode: 'showDetails',
+                    formAction: '',
                     navLocation: 'emp',
-                    // pageTitle: 'About Employee',
-                    // employee: employee
+                    pageTitle: 'Szczegóły Pracownika'
                 });
-        // });
+        });
 }
 exports.showEditEmployee = (req,res,next) => {
-    // const id = req.params.id;
-    // repository.getEmployeeById(id)
-    //     .then(employee => {
-            res.render('pages/employee/form-edit',
+    const id = req.params.empId;
+    repository.getEmployeeById(id)
+        .then(emp => {
+            res.render('pages/employee/form',
                 {
+                    emp: emp,
                     navLocation: 'emp',
-                    // pageTitle: 'Edytuj Pracownika',
-                    // employee: employee,
-                    // formAction: '/employees/edit/'
+                    pageTitle: 'Edycja Pracownika',
+                    btnLabel: 'Edytuj Pracownika',
+                    formMode: 'edit',
+                    formAction: '/employees/edit'
                 });
-        // });
+        });
 }
 
 exports.addEmployee = async (req, res, next) => {

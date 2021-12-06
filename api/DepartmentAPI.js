@@ -1,7 +1,7 @@
 const DeptRepository = require('../repository/mysql2/DepartmentRepository');
 
 exports.getDepartments = (reg, res, next) => {
-    DeptRepository.getDepartments()
+    DeptRepository.getDepartmentsWithEmployees()
         .then(emps => {
             res.status(200).json(emps);
         })

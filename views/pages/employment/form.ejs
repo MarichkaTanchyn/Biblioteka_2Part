@@ -1,19 +1,96 @@
 <%- include('../../fragments/header.ejs') %>
 
-<h2>Nowe Zatrudnienie</h2>
-<form class="form" action="./listOfEmployed.ejs" onsubmit="return validateForm();">
-  <label for="firstName">Imię:<span class="symbol-required">*</span></label>
-  <input input="text" name="firstName" id="firstName" required />
-  <span id="errorFirstName"></span>
+<script src="../../../public/js/validationEmpForm.js" type="application/javascript"></script>
+<script type="application/javascript" src="/js/validationCommon.js"></script>
 
-  <label for="lastName">Nazwisko: <span class="symbol-required">*</span></label>
-  <input input="text" name="lastName" id="lastName" required />
-  <span id="errorLastName"></span>
-  <label for="email">E-mail: <span class="symbol-required">*</span></label>
-  <input input="email" name="email" id="email" required />
-  <span id="errorEmail"></span>
-  <input type="submit" class="button"  value="Dodaj" />
-  <a class="button" href="/employments">Anuluj</a>
+<h2>
+    <%= pageTitle %>
+</h2>
+
+<form class="form" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
+    <input type="hidden" name="empl_id">
+
+    <label for="deptName">Department:<span class="symbol-required">*</span></label>
+    <select name="deptName" id="deptName" value="<%= departments[0].Name %>"
+            <%= (formMode === 'showDetails') ? 'disabled' : '' %>>
+        <% for (var j = 0; j < departments.length; j++) { %>
+            <option>
+                <%= departments[j].Name %>
+            </option>
+        <% } %>
+    </select>
+    <span id="errorDepartment"></span>
+
+    <label for="empName">Imię:<span class="symbol-required">*</span></label>
+    <select name="empName" id="empName" value="<%= employees.Name %>"
+            <%= (formMode === 'showDetails') ? 'disabled' : '' %>>
+        <% for(var k = 0; k < employees.length; k++) { %>
+            <option>
+                <%= employees[k].Name %>
+            </option>
+        <% } %>
+    </select>
+    <span id="errorFirstName"></span>
+
+    <label for="empLastName">Nazwisko:<span class="symbol-required">*</span></label>
+    <select name="empLastName" id="empName" value="<%= employees.Name %>"
+            <%= (formMode === 'showDetails') ? 'disabled' : '' %>>
+        <% for(var i = 0; i < employees.length; i++) { %>
+            <option>
+                <%= employees[i].LastName %>
+            </option>
+        <% } %>
+    </select>
+    <span id="errorLastName"></span>
+
+    <label for="telNum">Numer Telefonu:<span class="symbol-required">*</span></label>
+    <input type="number" name="telNum" id="telNum" placeholder="np. 729362362" value="<%= employees.Email %>"
+            <%= (formMode === 'showDetails') ? 'disabled' : '' %> />
+    <span id="errorEmail"></span>
+    <% if (formMode != 'showDetails') { %>
+    <input type="submit" class="button" value="Dodaj"/>
+    <a class="button" href="/employments">Anuluj</a>
+    <% } %>
 </form>
+
+
+<% if (formMode === 'showDetails') { %>
+    <a class="button" href="/employments/edit/<%= empl.id %>">Edytuj</a>
+<% } %>
+
+
+<% if (formMode === 'showDetails' || formMode === 'edit') { %>
+    <h2>
+        <%= pageTitle %>
+    </h2>
+
+    <table class="table-list">
+        <thead>
+        <tr>
+            <th>Departament</th>
+            <th>Imie</th>
+            <th>Nazwisko</th>
+            <th>Numer Telefonu</th>
+            <th>Data Zatrudnienia</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><%= empl.department.DeptName %></td>
+                <td><%= empl.employee.EmpName %></td>
+                <td><%= empl.employee.LastName %></td>
+                <td><%= empl.PhoneNumber %></td>
+                <td><%= empl.DataOd.toISOString().split('T')[0] %></td>
+
+            </tr>
+        </tbody>
+    </table>
+    <% if (formMode === 'showDetails') { %>
+        <a class="button" href="/employments">Powrót</a>
+
+
+    <% } %>
+<% } %>
+
 
 <%- include('../../fragments/footer.ejs') %>

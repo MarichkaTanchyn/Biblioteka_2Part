@@ -3,7 +3,6 @@ const db = require("../../config/mysql2/db");
 exports.getEmployees = () => {
     return db.promise().query('SELECT * FROM Employee')
         .then((result, fields) => {
-            console.log(result[0]);
             return result[0];
         }
     ).catch(err => {
@@ -22,7 +21,7 @@ exports.getEmployeeById = (empId) => {
                 return {};
             }
             const emp = {
-                id: parseInt(empId),
+                empId: parseInt(empId),
                 EmpName: firstRow.EmpName,
                 LastName: firstRow.LastName,
                 Email: firstRow.Email,
@@ -54,18 +53,18 @@ exports.getEmployeeById = (empId) => {
 
 exports.createEmployee = (newEmployeeData) => {
     const id = newEmployeeData.id;
-    const name = newEmployeeData.EmpName;
+    const EmpName = newEmployeeData.EmpName;
     const lastName = newEmployeeData.LastName;
     const email = newEmployeeData.Email;
     const sql = "INSERT INTO Employee (Employee_id ,Name, LastName, Email) VALUES (?,?,?,?);"
-    return db.promise().execute(sql, [id, name, lastName, email]);
+    return db.promise().execute(sql, [id, EmpName, lastName, email]);
 };
 exports.updateEmployee = (employeeId, employeeDate) => {
-    const name = employeeDate.EmpName;
+    const EmpName = employeeDate.EmpName;
     const lastName = employeeDate.LastName;
     const email = employeeDate.Email;
     const sql = "UPDATE Employee SET Name = ?, LastName = ?, Email = ?, WHERE Employee_id = ?;"
-    return db.promise().execute(sql, [name, lastName, email, employeeId]);
+    return db.promise().execute(sql, [EmpName, lastName, email, employeeId]);
 };
 exports.deleteEmployee = (employeeId) => {
     const sql = "DELETE FROM Employee WHERE Employee_id = ?";

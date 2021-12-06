@@ -1,0 +1,46 @@
+<%- include('../../fragments/header.ejs') %>
+
+<h2>
+  <%= pageTitle %>
+</h2>
+<table class="table-list">
+  <thead>
+    <tr>
+      <th scope="col">Departament</th>
+      <th scope="col">Imię</th>
+      <th scope="col">Nazwisko</th>
+      <th scope="col">Numer Telefonu</th>
+      <th scope="col">Data Zatrudnienia</th>
+      <th scope="col">Akcje</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  <% for (const empl of empls) { %>
+
+    <tr>
+      <td><%= empl.department.DeptName %></td>
+      <td><%= empl.employee.EmpName %></td>
+      <td><%= empl.employee.LastName %></td>
+      <td><%= empl.PhoneNumber %></td>
+      <td><%= empl.DataOd.toISOString().split('T')[0] %></td>
+      <td>
+        <ul class="list-actions">
+          <li>
+            <a class="button-details" href="/employments/details/<%= empl.id %>">Szczegóły</a>
+          </li>
+          <li>
+            <a class="button-edit" href="/employments/edit/<%= empl.id %>">Edytuj</a>
+          </li>
+          <li>
+            <a class="button-delete" href="/employments/delete/<%= empl.id %>">Usuń</a>
+          </li>
+        </ul>
+      </td>
+    </tr>
+<% } %>
+  </tbody>
+</table>
+<p class="button-submit"><a class="a-in-button" href="/employments/add">Dodaj nowe zatrudnienie</a></p>
+
+<%- include('../../fragments/footer.ejs') %>

@@ -1,27 +1,74 @@
 <%- include('../../fragments/header.ejs') %>
 
-<h2>Nowy Departament</h2>
-<form class="form" action="./list.ejs">
+<script src="../../../public/js/validationEmpForm.js" type="application/javascript"></script>
+<script type="application/javascript" src="/js/validationCommon.js"></script>
 
-  <label for="nazwa">Nazwa:<span class="symbol-required">*</span></label>
-  <input type="text" name="nazwa" id="nazwa" required />
-  <span id="errorDepartmentName"></span>
+<h2>
+    <%= pageTitle %>
+</h2>
+<form class="form" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
+    <input type="hidden" name="id" value="<%= dept.id %>">
 
-  <label for="amountofEmp"
-    >Ilość pracujących: <span class="symbol-required">*</span></label
-  >
-  <input type="number" name="amountofEmp" id="amountofEmp" required />
-  <span id="errorAmountofEmp"></span>
+    <label for="name">Nazwa:<span class="symbol-required">*</span></label>
+    <input type="text" name="name" id="name" placeholder=" 2-60 znaków" value="<%= dept.DeptName %>"
+            <%= (formMode === 'showDetails') ? 'disabled' : '' %>/>
+    <span id="errorDepartmentName"></span>
 
-  <label for="dateOfStart"
-    >Data: <span class="symbol-required">*</span></label
-  >
-  <input type="date" name="dateOfStart" id="dateOfStart" required />
-  <span id="errorDateOfStart" class="errors-text"></span>
-  
-    <input type="submit" class="button" value="Dodaj" />
-    <a class="button" href="list.ejs">Anuluj</a>
-  
+    <label for="amountofEmp">Ilość Pracujących: <span class="symbol-required">*</span></label>
+    <input type="number" name="amountofEmp" id="amountofEmp" placeholder=" 1-10" value="<%= dept.NumOfWorkers %>"
+            <%= (formMode === 'showDetails') ? 'disabled' : '' %>/>
+    <span id="errorAmountofEmp"></span>
+
+    <label for="dateOfStart">Data: <span class="symbol-required">*</span></label>
+    <input type="date" name="dateOfStart" id="dateOfStart" placeholder=" YYYY-MM-DD" value="<%= dept.DateOfStert %>"
+            <%= (formMode === 'showDetails') ? 'disabled' : '' %>/>
+    <span id="errorDateOfStart" class="errors-text"></span>
+
+    <% if (formMode != 'showDetails') { %>
+        <input type="submit" class="button" value="Dodaj"/>
+        <a class="button" href="/departments">Anuluj</a>
+    <% } %>
 </form>
+
+</form>
+
+<% if (formMode === 'showDetails') { %>
+    <a class="button" href="/departments/edit/<%= dept.id %>">Edytuj</a>
+<% } %>
+
+
+<% if (formMode === 'showDetails' || formMode === 'edit') { %>
+    <h2>
+        <%= pageTitle %>
+    </h2>
+
+    <table class="table-list">
+        <thead>
+        <tr>
+            <th>Imie</th>
+            <th>Nazwisko</th>
+            <th>Numer Telefonu</th>
+            <th>Data Od</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for(let d of dept.departments) { %>
+            <tr>
+                <td><%= d.employee.EmpName %></td>
+                <td><%= d.employee.LastName %></td>
+                <td><%= d.PhoneNumber %></td>
+                <td><%= d.DataOd.toISOString().split('T')[0] %></td>
+
+            </tr>
+        <% } %>
+        </tbody>
+    </table>
+    <% if (formMode === 'showDetails') { %>
+        <a class="button" href="/departments">Powrót</a>
+
+
+    <% } %>
+<% } %>
+
 
 <%- include('../../fragments/footer.ejs') %>
