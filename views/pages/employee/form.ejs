@@ -1,39 +1,45 @@
 <%- include('../../fragments/header.ejs') %>
 
-<script src="../../../public/js/validationEmpForm.js" type="application/javascript"></script>
-<script type="application/javascript" src="/js/validationCommon.js"></script>
+<!--<script src="../../../public/js/validationEmpForm.js" type="application/javascript"></script>-->
+<!--<script type="application/javascript" src="/js/validationCommon.js"></script>-->
 
 <h2>
     <%= pageTitle %>
 </h2>
 
-<form class="form" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
-    <input type="hidden" name="id" value="<%= emp.id %>">
+<form class="form" method="POST" action="<%= formAction %>" novalidate>
+    <input type="hidden" name="empId" value="<%= emp.empId %>">
 
-    <label for="firstName">Imię:<span class="symbol-required">*</span></label>
-    <input type="text" name="firstName" id="firstName" placeholder="2-60 znaków" value="<%= emp.EmpName %>"
-            <%= (formMode === 'showDetails') ? 'disabled' : '' %>/>
 
-    <span id="errorFirstName"></span>
+    <label for="Name">Imię:<span class="symbol-required">*</span></label>
+    <input type="text" name="Name" id="Name" placeholder="2-60 znaków" value="<%= emp.Name %>"
+            <%= (formMode === 'showDetails') ? 'disabled' : '' %>
+    />
 
-    <label for="lastName">Nazwisko: <span class="symbol-required">*</span></label>
-    <input type="text" name="lastName" id="lastName" placeholder="2-60 znaków" value="<%= emp.LastName %>"
+    <span id="errorFirstName" class="errors-text">
+
+    </span>
+
+    <label for="LastName">Nazwisko: <span class="symbol-required">*</span></label>
+    <input type="text" name="LastName" id="LastName" placeholder="2-60 znaków" value="<%= emp.LastName %>"
             <%= (formMode === 'showDetails') ? 'disabled' : '' %> />
     <span id="errorLastName"></span>
 
-    <label for="email">E-mail: <span class="symbol-required">*</span></label>
-    <input input="email" name="email" id="email" placeholder="np. nazwa@domena.pl" value="<%= emp.Email %>"
+    <label for="Email">E-mail: <span class="symbol-required">*</span></label>
+    <input input="Email" name="Email" id="email" placeholder="np. nazwa@domena.pl" value="<%= emp.Email %>"
             <%= (formMode === 'showDetails') ? 'disabled' : '' %> />
     <span id="errorEmail"></span>
 
     <% if (formMode !== 'showDetails') { %>
-    <input type="submit" class="button" value="<%= btnLabel %>"/>
-    <a class="button" href="/employees">Anuluj</a>
+        <input type="submit" class="button" value="<%= btnLabel %>"/>
+        <a class="button" href="/employees">Anuluj</a>
 
     <% } %>
 </form>
-<% if (formMode === 'showDetails') { %>
-    <a class="button" href="/employees/edit<%= emp.id %>">Edytuj</a>
+<% if (formMode === 'showDetails') {
+    console.log(emp.empId);
+%>
+    <a class="button" href="/employees/edit/<%= emp.empId %>">Edytuj</a>
 <% } %>
 
 
@@ -45,29 +51,25 @@
     <table class="table-list">
         <thead>
         <tr>
-            <th>Departament</th>
-            <th>Data Zatrudnienia</th>
-            <th>Numer Telefonu</th>
+            <th>Departament </th>
+            <th>Data Zatrudnienia </th>
+            <th>Numer Telefonu </th>
         </tr>
         </thead>
         <tbody>
-        <% for(let e of emp.employees) {
-        %>
-
-        <tr>
-            <td><a href="/departments/details/<%= e.department._id %>"><%= e.department.DeptName %></a></td>
-            <td><%= e.DataOd.toISOString().split('T')[0] %></td>
-            <td><%= e.PhoneNumber %></td>
-        </tr>
+        <% for(let e of emp.employees) { %>
+            <tr>
+                <td><a href="/departments/details/<%= e.department._id %>"><%= e.department.DeptName %></a></td>
+                <td><%= e.DataOd.toISOString().split('T')[0] %></td>
+                <td><%= e.PhoneNumber %></td>
+            </tr>
         <% } %>
         </tbody>
     </table>
     <% if (formMode === 'showDetails') { %>
         <a class="button" href="/employees">Powrót</a>
 
-
     <% } %>
-
 <% } %>
 
 

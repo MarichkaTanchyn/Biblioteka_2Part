@@ -1,6 +1,6 @@
 const repository = require('../repository/mysql2/EmployeeRepository');
 
-exports.showEmployeeList = (req,res,next) => {
+exports.showEmployeeList = (req, res, next) => {
     repository.getEmployees()
         .then(emps => {
             res.render('pages/employee/list',
@@ -11,23 +11,25 @@ exports.showEmployeeList = (req,res,next) => {
                 });
         });
 }
-exports.showAddEmployeeForm = (req,res,next) => {
-    res.render('pages/employee/form',{
+exports.showAddEmployeeForm = (req, res, next) => {
+    res.render('pages/employee/form', {
         emp: {},
         navLocation: 'emp',
         pageTitle: 'Nowy Pracownik',
         formMode: 'createNew',
         btnLabel: "Dodaj Pracownika",
         formAction: '/employees/add',
+
     });
 }
-exports.showEmployeeDetails = (req,res,next) => {
+exports.showEmployeeDetails = (req, res, next) => {
     const id = req.params.empId;
     repository.getEmployeeById(id)
         .then(emp => {
             res.render('pages/employee/form',
                 {
                     emp: emp,
+                    btnLabel: 'Edytuj',
                     formMode: 'showDetails',
                     formAction: '',
                     navLocation: 'emp',
@@ -35,7 +37,7 @@ exports.showEmployeeDetails = (req,res,next) => {
                 });
         });
 }
-exports.showEditEmployee = (req,res,next) => {
+exports.showEditEmployee = (req, res, next) => {
     const id = req.params.empId;
     repository.getEmployeeById(id)
         .then(emp => {
@@ -44,7 +46,7 @@ exports.showEditEmployee = (req,res,next) => {
                     emp: emp,
                     navLocation: 'emp',
                     pageTitle: 'Edycja Pracownika',
-                    btnLabel: 'Edytuj Pracownika',
+                    btnLabel: 'Potwierdzić',
                     formMode: 'edit',
                     formAction: '/employees/edit'
                 });
@@ -52,42 +54,46 @@ exports.showEditEmployee = (req,res,next) => {
 }
 
 exports.addEmployee = async (req, res, next) => {
-    // const data = req.body;
-    // await repository.createEmployee(data)
-    //     .then(() => res.redirect('/employees'))
-    //     .catch(err => {
+    const empData = {...req.body};
+    try {
+        await repository.createEmployee(empData)
+        res.redirect('/employees');
+    } catch(err) {
             res.render('pages/employee/form', {
-                // employee: data,
-                // pageTitle: 'Dodaj Pracownika',
-                // formMode: 'createNew',
-                // btnLable: 'Dodaj Pracownika',
-                // formAction: '/employees/add',
-                navLocation: 'emp',
-                // errors: err.errors
-            })
-        // });
+                emp: empData,
+                pageTitle: "Dodawanie Pracownika",
+                formMode: 'createNew',
+                bntLabel: 'Dodaj Pracownika',
+                formAction: '/employees/add',
+                validationErrors: err.details
+            });
+    }
 }
 
 exports.updateEmployee = async (req, res, next) => {
-    const data = req.body;
-    await repository.updateEmployee(data.id, data)
-        .then(() => res.redirect('/employees'))
-        .catch(err => {
-            res.render('pages/employee/form-edit', {
-                doctor: repository.getDoctorById(data.id),
-                pageTitle: 'Edytuj Pracownika',
-                formMode: 'createNew',
-                btnLable: 'Edytuj Pracownika',
+    const empData = {...req.body};
+    const empId = req.body.empId;
+    console.log(empData);
+    console.log(empId);
+
+    try{
+        await repository.updateEmployee(empId, empData);
+        res.redirect('/employees');
+    } catch(err) {
+            res.render('pages/employee/form', {
+                emp: empData,
+                pageTitle: "Edycja Pracownika",
+                formMode: 'edit',
+                bntLabel: 'Zatwierdz',
                 formAction: '/employees/edit',
-                navLocation: 'emp',
-                errors: err.errors
-            })
-        });
+                validationErrors: err.details
+            });
+
+        }
 }
 
 exports.deleteEmployee = async (req, res, next) => {
-    const id = req.params.id;
-    await repository.deleteEmployee(id)
-        .then(() => res.redirect('/employees'))
-        .catch(() => res.redirect('/employees'));
+    await repository.deleteEmployee(req.params.empId);
+        res.redirect('/employees');
+
 }

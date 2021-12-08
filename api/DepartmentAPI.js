@@ -1,7 +1,7 @@
 const DeptRepository = require('../repository/mysql2/DepartmentRepository');
 
 exports.getDepartments = (reg, res, next) => {
-    DeptRepository.getDepartmentsWithEmployees()
+    DeptRepository.getDepartments()
         .then(emps => {
             res.status(200).json(emps);
         })
@@ -24,6 +24,7 @@ exports.getDepartmentsById = (req, res, next) => {
         });
 };
 exports.createDepartment = (req, res, next) => {
+    console.log(req.body);
     DeptRepository.createDepartment(req.body)
         .then(newobj => {
             res.status(201).json(newObj);

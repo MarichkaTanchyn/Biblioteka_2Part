@@ -1,4 +1,5 @@
 const db = require("../../config/mysql2/db");
+// const empSchema = require('../../model/joi/Employee');
 
 exports.getEmployees = () => {
     return db.promise().query('SELECT * FROM Employee')
@@ -22,7 +23,7 @@ exports.getEmployeeById = (empId) => {
             }
             const emp = {
                 empId: parseInt(empId),
-                EmpName: firstRow.EmpName,
+                Name: firstRow.EmpName,
                 LastName: firstRow.LastName,
                 Email: firstRow.Email,
                 employees: []
@@ -52,21 +53,25 @@ exports.getEmployeeById = (empId) => {
 };
 
 exports.createEmployee = (newEmployeeData) => {
-    const id = newEmployeeData.id;
-    const EmpName = newEmployeeData.EmpName;
-    const lastName = newEmployeeData.LastName;
-    const email = newEmployeeData.Email;
-    const sql = "INSERT INTO Employee (Employee_id ,Name, LastName, Email) VALUES (?,?,?,?);"
-    return db.promise().execute(sql, [id, EmpName, lastName, email]);
+    // const vRes = empSchema.validate(newEmployeeData, {abortEarly: false});
+    // if (vRes.error){
+    //     return Promise.reject(vRes.error);
+    // }
+    const EmpName = newEmployeeData.Name;
+    const LastName = newEmployeeData.LastName;
+    const Email = newEmployeeData.Email;
+    const sql = "INSERT INTO Employee (Name, LastName, Email) VALUES (?,?,?);"
+    return db.promise().execute(sql, [EmpName, LastName, Email]);
 };
 exports.updateEmployee = (employeeId, employeeDate) => {
-    const EmpName = employeeDate.EmpName;
-    const lastName = employeeDate.LastName;
-    const email = employeeDate.Email;
-    const sql = "UPDATE Employee SET Name = ?, LastName = ?, Email = ?, WHERE Employee_id = ?;"
-    return db.promise().execute(sql, [EmpName, lastName, email, employeeId]);
+    const EmpName = employeeDate.Name;
+    const LastName = employeeDate.LastName;
+    const Email = employeeDate.Email;
+    const sql = "UPDATE Employee SET Name = ?, LastName = ?, Email = ? WHERE Employee_id = ?;"
+    return db.promise().execute(sql, [EmpName, LastName, Email, employeeId]);
 };
-exports.deleteEmployee = (employeeId) => {
+exports.deleteEmployee = async (employeeId) => {
+    await db.promise().execute('DELETE From Employment WHERE Employee_id = ?', [employeeId]);
     const sql = "DELETE FROM Employee WHERE Employee_id = ?";
     return db.promise().execute(sql, [employeeId]);
 }

@@ -5,4 +5,7 @@ router.get('/',employmentController.showEmploymentList);
 router.get('/add',employmentController.showAddEmploymentForm);
 router.get('/details/:emplId',employmentController.showEmploymentDetails);
 router.get('/edit/:emplId', employmentController.showEditEmployment);
+router.post('/add', employmentController.addEmployment);
+router.post('/edit', employmentController.updateEmployment);
+router.get('/delete/:emplId', employmentController.deleteEmployment);
 module.exports = router;

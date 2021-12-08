@@ -2,7 +2,7 @@ const db = require("../../config/mysql2/db");
 
 
 exports.getEmployments = () => {
-    const query = "SELECT empl.Employment_id as empl_id, empl.DataOd, empl.PhoneNumber, dept.Name as DeptName, dept.NumOfWorkers, dept.DateOfStert, empl.Dept_id as dept_id,empl.Employee_id as emp_id,e.Name as EmpName, e.LastName, e.Email FROM Employment empl left join Department dept on dept.Dept_id = empl.Dept_id left join Employee e on e.Employee_id = empl.Employee_id";
+    const query = "SELECT empl.Employment_id as empl_id, empl.DataOd, empl.PhoneNumber, dept.Name as DeptName, dept.NumOfWorkers, dept.DateOfStert, empl.Dept_id as dept_id, empl.Employee_id as emp_id,e.Name as EmpName, e.LastName, e.Email FROM Employment empl left join Department dept on dept.Dept_id = empl.Dept_id left join Employee e on e.Employee_id = empl.Employee_id";
     return db.promise().query(query)
         .then((results, fields) => {
             const employments = [];
@@ -13,6 +13,7 @@ exports.getEmployments = () => {
                     DataOd: row.DataOd,
                     PhoneNumber: row.PhoneNumber,
                     employee: {
+                        emp_id: row.emp_id,
                         EmpName: row.EmpName,
                         LastName: row.LastName,
                         Email: row.Email
@@ -47,6 +48,7 @@ exports.getEmploymentById = (employmentId) => {
                     DataOd: row.DataOd,
                     PhoneNumber: row.PhoneNumber,
                     employee: {
+                        emp_id: row.emp_id,
                         EmpName: row.EmpName,
                         LastName: row.LastName,
                         Email: row.Email
@@ -68,20 +70,29 @@ exports.getEmploymentById = (employmentId) => {
 }
 ;
 
-exports.createEmployment = (newEmploymentData) => {
-    const id = newEmploymentData.id;
-    const emp_id = newEmploymentData.emp_id;
-    const dept_id = newEmploymentData.dept_id;
+exports.createEmployment = async (newEmploymentData) => {
+    const emp_Id = newEmploymentData.emp_Id;
+    const dept_Id = newEmploymentData.deptId;
     const dataOd = newEmploymentData.DataOd;
-    const phoneNumber = newEmploymentData.PhoneNumber;
-    const sql = "INSERT INTO Employment (Employee_id,Employment_id, Dept_id ,DataOd, PhoneNumber) VALUES (?,?,?,?,?);"
-    return db.promise().execute(sql, [emp_id, id, dept_id, dataOd, phoneNumber]);
+    const phoneNumber = newEmploymentData.telNum;
+    const count = await db.promise().query('SELECT COUNT(*) as count FROM Employment WHERE Employee_id = ? And Dept_id = ?;', [emp_Id,dept_Id]);
+    console.log(count);
+    if (count[0][0]['count'] > 0) {
+        throw Error();
+    }
+    const sql = "INSERT INTO Employment (Employee_id, Dept_id ,DataOd, PhoneNumber) VALUES (?,?,?,?);"
+    return db.promise().execute(sql, [emp_Id, dept_Id, dataOd, phoneNumber]);
 };
+
 exports.updateEmployment = (emplId, emplDate) => {
+    console.log(emplDate);
+    console.log(emplId);
+    const emp_Id = emplDate.emp_Id;
+    const dept_Id = emplDate.deptId;
     const dataOd = emplDate.DataOd;
-    const phoneNumber = emplDate.PhoneNumber;
-    const sql = "UPDATE Employment SET DataOd = ?, PhoneNumber = ?, WHERE Employment_id = ?;"
-    return db.promise().execute(sql, [dataOd, phoneNumber, emplId]);
+    const phoneNumber = emplDate.telNum;
+    const sql = "UPDATE Employment SET Employee_id = ?, Dept_id = ?, DataOd = ?, PhoneNumber = ? WHERE Employment_id = ?;"
+    return db.promise().execute(sql, [emp_Id, dept_Id, dataOd, phoneNumber, emplId]);
 };
 exports.deleteEmployment = (emplId) => {
     const sql = "DELETE FROM Employment WHERE Employment_id = ?";

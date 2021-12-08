@@ -1,55 +1,49 @@
 <%- include('../../fragments/header.ejs') %>
 
-<script src="../../../public/js/validationEmpForm.js" type="application/javascript"></script>
-<script type="application/javascript" src="/js/validationCommon.js"></script>
+<!--<script src="../../../public/js/validationEmpForm.js" type="application/javascript"></script>-->
+<!--<script type="application/javascript" src="/js/validationCommon.js"></script>-->
 
 <h2>
     <%= pageTitle %>
 </h2>
 
-<form class="form" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
-    <input type="hidden" name="empl_id">
+<form class="form" method="post" action="<%= formAction %>" novalidate>
+    <input type="hidden" name="empl_id" value="<%= empl.id %>">
 
     <label for="deptName">Department:<span class="symbol-required">*</span></label>
-    <select name="deptName" id="deptName" value="<%= departments[0].Name %>"
-            <%= (formMode === 'showDetails') ? 'disabled' : '' %>>
+    <select name="deptId" id="dept" <%= (formMode === 'showDetails') ? 'disabled' : '' %>>
+
         <% for (var j = 0; j < departments.length; j++) { %>
-            <option>
-                <%= departments[j].Name %>
-            </option>
+            <option value="<%= departments[j].Dept_id %>" label="<%= departments[j].Name %>"
+            <% (empl.id && departments[j].Dept_id.toString() === empl.department.id.toString()) ? 'selected' : ''%>></option>
         <% } %>
     </select>
     <span id="errorDepartment"></span>
 
-    <label for="empName">Imię:<span class="symbol-required">*</span></label>
-    <select name="empName" id="empName" value="<%= employees.Name %>"
-            <%= (formMode === 'showDetails') ? 'disabled' : '' %>>
-        <% for(var k = 0; k < employees.length; k++) { %>
-            <option>
-                <%= employees[k].Name %>
-            </option>
+    <label for="empName">Pracownik:<span class="symbol-required">*</span></label>
+    <select name="emp_Id" id="employee" <%= (formMode === 'showDetails') ? 'disabled' : '' %>>
+        <option value="">Wybierz pracownika</option>
+        <% for(let k = 0; k < employees.length; k++) {
+            let emp = employees[k];
+        %>
+        <option value="<%= emp.Employee_id %>" label="<%= emp.Name + " " + emp.LastName %>"
+                <%= (empl.id && emp.Employee_id.toString() === empl.employee.emp_id.toString()) ? 'selected' : '' %>></option>
         <% } %>
     </select>
-    <span id="errorFirstName"></span>
-
-    <label for="empLastName">Nazwisko:<span class="symbol-required">*</span></label>
-    <select name="empLastName" id="empName" value="<%= employees.Name %>"
-            <%= (formMode === 'showDetails') ? 'disabled' : '' %>>
-        <% for(var i = 0; i < employees.length; i++) { %>
-            <option>
-                <%= employees[i].LastName %>
-            </option>
-        <% } %>
-    </select>
-    <span id="errorLastName"></span>
 
     <label for="telNum">Numer Telefonu:<span class="symbol-required">*</span></label>
-    <input type="number" name="telNum" id="telNum" placeholder="np. 729362362" value="<%= employees.Email %>"
+    <input type="number" name="telNum" id="telNum" placeholder="np. 729362362" value="<%= empl.PhoneNumber %>"
             <%= (formMode === 'showDetails') ? 'disabled' : '' %> />
-    <span id="errorEmail"></span>
-    <% if (formMode != 'showDetails') { %>
-    <input type="submit" class="button" value="Dodaj"/>
-    <a class="button" href="/employments">Anuluj</a>
+    <!--    <span id="errorEmail"></span>-->
+
+    <label for="DataOd">Data: <span class="symbol-required">*</span></label>
+    <input type="date" name="DataOd" id="DataOd" placeholder=" YYYY-MM-DD" value="<%= empl.DataOd %>"
+            <%= (formMode === 'showDetails') ? 'disabled' : '' %>/>
+    <span id="errorDateOfStart" class="errors-text"></span>
+
+    <% if (formMode !== 'showDetails') { %>
+        <input type="submit" class="button" value="Dodaj"/>
+        <a class="button" href="/employments">Anuluj</a>
     <% } %>
 </form>
 
@@ -75,14 +69,14 @@
         </tr>
         </thead>
         <tbody>
-            <tr>
-                <td><%= empl.department.DeptName %></td>
-                <td><%= empl.employee.EmpName %></td>
-                <td><%= empl.employee.LastName %></td>
-                <td><%= empl.PhoneNumber %></td>
-                <td><%= empl.DataOd.toISOString().split('T')[0] %></td>
+        <tr>
+            <td><%= empl.department.DeptName %></td>
+            <td><%= empl.employee.EmpName %></td>
+            <td><%= empl.employee.LastName %></td>
+            <td><%= empl.PhoneNumber %></td>
+            <td><%= empl.DataOd.toISOString().split('T')[0] %></td>
 
-            </tr>
+        </tr>
         </tbody>
     </table>
     <% if (formMode === 'showDetails') { %>

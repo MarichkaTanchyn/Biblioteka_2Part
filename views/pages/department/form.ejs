@@ -38,31 +38,34 @@
 
 
 <% if (formMode === 'showDetails' || formMode === 'edit') { %>
-    <h2>
-        <%= pageTitle %>
-    </h2>
-
-    <table class="table-list">
-        <thead>
-        <tr>
-            <th>Imie</th>
-            <th>Nazwisko</th>
-            <th>Numer Telefonu</th>
-            <th>Data Od</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% for(let d of dept.departments) { %>
+    <% if (dept.employments.length > 0){ %>
+        <h2>
+            <%= pageTitle %>
+        </h2>
+        <table class="table-list">
+            <thead>
             <tr>
-                <td><%= d.employee.EmpName %></td>
-                <td><%= d.employee.LastName %></td>
-                <td><%= d.PhoneNumber %></td>
-                <td><%= d.DataOd.toISOString().split('T')[0] %></td>
-
+                <th>Imie</th>
+                <th>Nazwisko</th>
+                <th>Numer Telefonu</th>
+                <th>Data Od</th>
             </tr>
-        <% } %>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+
+            <% for(let empl of dept.employments) { %>
+                <tr>
+                    <td><%= empl.employee.EmpName %></td>
+                    <td><%= empl.employee.LastName %></td>
+                    <td><%= empl.PhoneNumber %></td>
+                    <td><%= empl.DataOd.toISOString().split('T')[0] %></td>
+
+                </tr>
+            <% } %>
+
+            </tbody>
+        </table>
+    <% } %>
     <% if (formMode === 'showDetails') { %>
         <a class="button" href="/departments">Powrót</a>
 
