@@ -19,6 +19,7 @@ exports.showAddEmployeeForm = (req, res, next) => {
         formMode: 'createNew',
         btnLabel: "Dodaj Pracownika",
         formAction: '/employees/add',
+        validationErrors: []
 
     });
 }
@@ -26,31 +27,36 @@ exports.showEmployeeDetails = (req, res, next) => {
     const id = req.params.empId;
     repository.getEmployeeById(id)
         .then(emp => {
-            res.render('pages/employee/form',
-                {
-                    emp: emp,
-                    btnLabel: 'Edytuj',
-                    formMode: 'showDetails',
-                    formAction: '',
-                    navLocation: 'emp',
-                    pageTitle: 'Szczegóły Pracownika'
-                });
-        });
+        res.render('pages/employee/form',
+            {
+                emp: emp,
+                btnLabel: 'Edytuj',
+                formMode: 'showDetails',
+                formAction: '',
+                navLocation: 'emp',
+                pageTitle: 'Szczegóły Pracownika',
+                validationErrors: []
+            });
+    });
 }
+
 exports.showEditEmployee = (req, res, next) => {
     const id = req.params.empId;
     repository.getEmployeeById(id)
         .then(emp => {
-            res.render('pages/employee/form',
-                {
-                    emp: emp,
-                    navLocation: 'emp',
-                    pageTitle: 'Edycja Pracownika',
-                    btnLabel: 'Potwierdzić',
-                    formMode: 'edit',
-                    formAction: '/employees/edit'
-                });
-        });
+            res.redirect('/employees');
+        }).catch(err => {
+        res.render('pages/employee/form',
+            {
+                emp: emp,
+                navLocation: 'emp',
+                pageTitle: 'Edycja Pracownika',
+                btnLabel: 'Potwierdzić',
+                formMode: 'edit',
+                formAction: '/employees/edit',
+                validationErrors: []
+            });
+    });
 }
 
 exports.addEmployee = async (req, res, next) => {
@@ -58,15 +64,16 @@ exports.addEmployee = async (req, res, next) => {
     try {
         await repository.createEmployee(empData)
         res.redirect('/employees');
-    } catch(err) {
-            res.render('pages/employee/form', {
-                emp: empData,
-                pageTitle: "Dodawanie Pracownika",
-                formMode: 'createNew',
-                bntLabel: 'Dodaj Pracownika',
-                formAction: '/employees/add',
-                validationErrors: err.details
-            });
+    } catch (err) {
+        res.render('pages/employee/form', {
+            emp: empData,
+            pageTitle: "Dodawanie Pracownika",
+            formMode: 'createNew',
+            btnLabel: 'Potwierdzić',
+            bntLabel: 'Dodaj Pracownika',
+            formAction: '/employees/add',
+            validationErrors: err.details
+        });
     }
 }
 
@@ -76,24 +83,24 @@ exports.updateEmployee = async (req, res, next) => {
     console.log(empData);
     console.log(empId);
 
-    try{
+    try {
         await repository.updateEmployee(empId, empData);
         res.redirect('/employees');
-    } catch(err) {
-            res.render('pages/employee/form', {
-                emp: empData,
-                pageTitle: "Edycja Pracownika",
-                formMode: 'edit',
-                bntLabel: 'Zatwierdz',
-                formAction: '/employees/edit',
-                validationErrors: err.details
-            });
+    } catch (err) {
+        res.render('pages/employee/form', {
+            emp: empData,
+            pageTitle: "Edycja Pracownika",
+            formMode: 'edit',
+            bntLabel: 'Zatwierdz',
+            formAction: '/employees/edit',
+            validationErrors: err.details
+        });
 
-        }
+    }
 }
 
 exports.deleteEmployee = async (req, res, next) => {
     await repository.deleteEmployee(req.params.empId);
-        res.redirect('/employees');
+    res.redirect('/employees');
 
 }

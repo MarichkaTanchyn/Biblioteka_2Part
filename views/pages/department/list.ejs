@@ -1,5 +1,10 @@
 <%- include('../../fragments/header.ejs') %>
-
+<script>
+  function alertAfterDelete(){
+    if(confirm("Czy napewno chcesz usunąć Departament?"))
+      alert("Usunałeś departament!");
+  }
+</script>
   <h2>
     <%= pageTitle %>
   </h2>
@@ -25,7 +30,7 @@
               <a class="button-edit" href="/departments/edit/<%= dept.Dept_id %>">Edytuj</a>
             </li>
             <li>
-              <a class="button-delete" href="/departments/delete/<%= dept.Dept_id %>">Usuń</a>
+              <a class="button-delete" href="/departments/delete/<%= dept.Dept_id %>" onclick="alertAfterDelete();">Usuń</a>
             </li>
           </ul>
         </td>

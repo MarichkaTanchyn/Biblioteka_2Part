@@ -1,4 +1,5 @@
 const db = require("../../config/mysql2/db");
+const deptSchema = require("../../model/joi/Department");
 
 exports.getDepartments = () => {
     return db.promise().query('SELECT * FROM Department')
@@ -85,16 +86,24 @@ exports.getDepartmentById = (deptId) => {
         };
 
     exports.createDepartment = (newDepartmentData) => {
+        const vRes = deptSchema.validate(newDepartmentData, {abortEarly: false});
+        if (vRes.error){
+            return Promise.reject(vRes.error);
+        }
         const deptName = newDepartmentData.name;
         const numOfWorkers = newDepartmentData.amountofEmp;
         const dateOfStert = newDepartmentData.dateOfStart;
         const sql = "INSERT INTO Department (Name, NumOfWorkers, DateOfStert) VALUES (?,?,?);"
         return db.promise().execute(sql, [ deptName, numOfWorkers, dateOfStert]);
     };
-    exports.updateDepartment = (deptId, deptDate) => {
-        const deptName = deptDate.name;
-        const numOfWorkers = deptDate.amountofEmp;
-        const dateOfStert = deptDate.dateOfStart;
+    exports.updateDepartment = (deptId, deptData) => {
+        const vRes = deptSchema.validate(deptData, {abortEarly: false});
+        if (vRes.error){
+            return Promise.reject(vRes.error);
+        }
+        const deptName = deptData.name;
+        const numOfWorkers = deptData.amountofEmp;
+        const dateOfStert = deptData.dateOfStart;
 
         const sql = "UPDATE Department SET Name = ?, numOfWorkers = ?, DateOfStert = ? WHERE Dept_id = ?;"
         return db.promise().execute(sql, [deptName, numOfWorkers, dateOfStert, deptId]);

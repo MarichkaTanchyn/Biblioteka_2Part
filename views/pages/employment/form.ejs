@@ -1,7 +1,7 @@
 <%- include('../../fragments/header.ejs') %>
 
-<!--<script src="../../../public/js/validationEmpForm.js" type="application/javascript"></script>-->
-<!--<script type="application/javascript" src="/js/validationCommon.js"></script>-->
+<script src="../../../public/js/validationEmpForm.js" type="application/javascript"></script>
+<script type="application/javascript" src="/js/validationCommon.js"></script>
 
 <h2>
     <%= pageTitle %>
@@ -15,7 +15,7 @@
 
         <% for (var j = 0; j < departments.length; j++) { %>
             <option value="<%= departments[j].Dept_id %>" label="<%= departments[j].Name %>"
-            <% (empl.id && departments[j].Dept_id.toString() === empl.department.id.toString()) ? 'selected' : ''%>></option>
+                    <% (empl.id && departments[j].Dept_id.toString() === empl.department.id.toString()) ? 'selected' : ''%>></option>
         <% } %>
     </select>
     <span id="errorDepartment"></span>
@@ -34,7 +34,7 @@
     <label for="telNum">Numer Telefonu:<span class="symbol-required">*</span></label>
     <input type="number" name="telNum" id="telNum" placeholder="np. 729362362" value="<%= empl.PhoneNumber %>"
             <%= (formMode === 'showDetails') ? 'disabled' : '' %> />
-    <!--    <span id="errorEmail"></span>-->
+        <span id="errorEmail"></span>
 
     <label for="DataOd">Data: <span class="symbol-required">*</span></label>
     <input type="date" name="DataOd" id="DataOd" placeholder=" YYYY-MM-DD" value="<%= empl.DataOd %>"

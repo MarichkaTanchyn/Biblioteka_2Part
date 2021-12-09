@@ -1,34 +1,47 @@
 <%- include('../../fragments/header.ejs') %>
 
-<!--<script src="../../../public/js/validationEmpForm.js" type="application/javascript"></script>-->
-<!--<script type="application/javascript" src="/js/validationCommon.js"></script>-->
+<script src="../../../public/js/validationEmpForm.js" type="application/javascript"></script>
+<script type="application/javascript" src="../../../public/js/validationCommon.js"></script>
 
 <h2>
     <%= pageTitle %>
 </h2>
 
-<form class="form" method="POST" action="<%= formAction %>" novalidate>
+<form class="form" method="POST" action="<%= formAction %>" onsubmit="validateForm();">
     <input type="hidden" name="empId" value="<%= emp.empId %>">
 
 
     <label for="Name">Imię:<span class="symbol-required">*</span></label>
     <input type="text" name="Name" id="Name" placeholder="2-60 znaków" value="<%= emp.Name %>"
             <%= (formMode === 'showDetails') ? 'disabled' : '' %>
+           class="<%= validationErrors.find(e => e.path.includes('Name')) ? 'error-input' : ''%>"
     />
-
     <span id="errorFirstName" class="errors-text">
-
+        <% if (validationErrors.find(e => e.path.includes('Name'))){ %>
+        <%= validationErrors.find(e => e.path.includes('Name')).message%>
+        <% }%>
     </span>
 
     <label for="LastName">Nazwisko: <span class="symbol-required">*</span></label>
     <input type="text" name="LastName" id="LastName" placeholder="2-60 znaków" value="<%= emp.LastName %>"
-            <%= (formMode === 'showDetails') ? 'disabled' : '' %> />
-    <span id="errorLastName"></span>
+            <%= (formMode === 'showDetails') ? 'disabled' : '' %>
+           class="<%= validationErrors.find(e => e.path.includes('LastName')) ? 'error-input' : ''%>"/>
+    <span id="errorLastName" class="errors-text">
+        <% if (validationErrors.find(e => e.path.includes('LastName'))){ %>
+            <%= validationErrors.find(e => e.path.includes('LastName')).message%>
+        <% }%>
+    </span>
 
     <label for="Email">E-mail: <span class="symbol-required">*</span></label>
-    <input input="Email" name="Email" id="email" placeholder="np. nazwa@domena.pl" value="<%= emp.Email %>"
-            <%= (formMode === 'showDetails') ? 'disabled' : '' %> />
-    <span id="errorEmail"></span>
+    <input input="Email" name="Email" id="Email" placeholder="np.: nazwa@domena.pl" value="<%= emp.Email %>"
+            <%= (formMode === 'showDetails') ? 'disabled' : '' %>
+    class="<%= validationErrors.find(e => e.path.includes('Email')) ? 'error-input' : ''%>"
+    />
+    <span id="errorEmail" class="errors-text">
+        <% if (validationErrors.find(e => e.path.includes('Email'))){ %>
+            <%= validationErrors.find(e => e.path.includes('Email')).message%>
+        <% }%>
+    </span>
 
     <% if (formMode !== 'showDetails') { %>
         <input type="submit" class="button" value="<%= btnLabel %>"/>
@@ -39,7 +52,7 @@
 <% if (formMode === 'showDetails') {
     console.log(emp.empId);
 %>
-    <a class="button" href="/employees/edit/<%= emp.empId %>">Edytuj</a>
+<a class="button" href="/employees/edit/<%= emp.empId %>">Edytuj</a>
 <% } %>
 
 
@@ -51,9 +64,9 @@
     <table class="table-list">
         <thead>
         <tr>
-            <th>Departament </th>
-            <th>Data Zatrudnienia </th>
-            <th>Numer Telefonu </th>
+            <th>Departament</th>
+            <th>Data Zatrudnienia</th>
+            <th>Numer Telefonu</th>
         </tr>
         </thead>
         <tbody>

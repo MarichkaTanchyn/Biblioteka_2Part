@@ -7,14 +7,23 @@ const errMessages = (errors) => {
             case "string.empty":
                 err.message = "Pole jest wymagane";
                 break;
-            case "string.min":
+            case "string.min" || "number.min":
                 err.message = 'Pole powinno zawierać co najmniej '+ err.local.limit +' znaki';
                 break;
             case "string.max":
                 err.message = 'Pole powinno zawierać co najwyżej '+ err.local.limit +'znaki';
                 break;
-            case "string.email":
-                err.message = 'Pole powinno zawierać prawidlowy adres email';
+            case "number.min":
+                err.message = 'Pole powinno zawierać co najmniej '+ err.local.limit +' znak';
+                break;
+            case "number.max":
+                err.message = 'Pole powinno zawierać co najwyżej '+ err.local.limit +'znaki';
+                break;
+            case "date.min":
+                err.message = 'Data nie poże być wcześniejsza niż 2000 rok';
+                break;
+            case "date.max":
+                err.message = 'Data nie poże być póżniejsza niż dziś';
                 break;
             default:
                 break;
@@ -22,26 +31,27 @@ const errMessages = (errors) => {
     });
     return errors;
 }
-const empSchema = Joi.object({
-    _id: Joi.number()
+const deptSchema = Joi.object({
+    id: Joi.number()
         .optional()
         .allow(""),
-    Name: Joi.string()
+    name: Joi.string()
         .min(2)
         .max(60)
         .required()
         .error(errMessages),
-    LastName: Joi.string()
-        .min(2)
-        .max(60)
+    amountofEmp: Joi.number()
+        .min(1)
+        .max(10)
         .required()
         .error(errMessages),
-    Email: Joi.string()
-        .email()
+    dateOfStart: Joi.date()
+        .min(2000)
+        .max("now")
         .required()
         .error(errMessages),
 });
 
 
 
-module.exports = empSchema;
+module.exports = deptSchema;

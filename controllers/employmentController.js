@@ -24,7 +24,8 @@ exports.showAddEmploymentForm = async (req, res, next) => {
         btnLabel: "Dodaj Zatrudnienie",
         employees: employees,
         departments: departments,
-        empl: empById
+        empl: empById,
+        validationErrors: []
     });
 }
 exports.showEmploymentDetails = async (req, res, next) => {
@@ -40,7 +41,8 @@ exports.showEmploymentDetails = async (req, res, next) => {
             pageTitle: "Szczegóły Zatrudnienia",
             depts: deptWithEmp,
             employees: employees,
-            departments: departments
+            departments: departments,
+            validationErrors: []
         });
 
 }
@@ -58,7 +60,8 @@ exports.showEditEmployment = async (req, res, next) => {
         pageTitle: "Edytuj Zatrudnienie",
         depts: deptWithEmp,
         employees: employees,
-        departments: departments
+        departments: departments,
+        validationErrors: []
     });
 }
 
@@ -99,7 +102,7 @@ exports.updateEmployment = async (req, res, next) => {
                 bntLabel: 'Zatwierdz',
                 validationErrors: err.details,
                 employees: employees,
-                departments: departments
+                departments: departments,
             });
         }
 }

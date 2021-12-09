@@ -21,7 +21,8 @@ exports.showAddDeptForm = (req,res,next) => {
             formMode: 'createNew',
             btnLabel: "Dodaj Departament",
             formAction: '/departments/add',
-            navLocation: 'dept'
+            navLocation: 'dept',
+            validationErrors: []
         });
 }
 exports.showDeptDetails = (req,res,next) => {
@@ -34,7 +35,8 @@ exports.showDeptDetails = (req,res,next) => {
                     formMode: 'showDetails',
                     formAction: '',
                     navLocation: 'dept',
-                    pageTitle: 'Szczegóły Departamenta'
+                    pageTitle: 'Szczegóły Departamenta',
+                    validationErrors: []
                 });
         });
 }
@@ -49,7 +51,8 @@ exports.showEditDept = (req,res,next) => {
                     pageTitle: 'Edycja Departamenta',
                     btnLabel: 'Edytuj Departamenta',
                     formMode: 'edit',
-                    formAction: '/departments/edit'
+                    formAction: '/departments/edit',
+                    validationErrors: []
                 });
         });
 

@@ -1,4 +1,5 @@
 const db = require("../../config/mysql2/db");
+// const emplSchema = require("../../model/joi/Employment");
 
 
 exports.getEmployments = () => {
@@ -71,6 +72,11 @@ exports.getEmploymentById = (employmentId) => {
 ;
 
 exports.createEmployment = async (newEmploymentData) => {
+    // const vRes = emplSchema.validate(newEmploymentData, {abortEarly: false});
+    // if (vRes.error) {
+    //     console.log(newEmploymentData.telNum);
+    //     return Promise.reject(vRes.error);
+    // }
     const emp_Id = newEmploymentData.emp_Id;
     const dept_Id = newEmploymentData.deptId;
     const dataOd = newEmploymentData.DataOd;
@@ -85,6 +91,10 @@ exports.createEmployment = async (newEmploymentData) => {
 };
 
 exports.updateEmployment = (emplId, emplDate) => {
+    // const vRes = emplSchema.validate(emplDate, {abortEarly: false});
+    // if (vRes.error) {
+    //     return Promise.reject(vRes.error);
+    // }
     console.log(emplDate);
     console.log(emplId);
     const emp_Id = emplDate.emp_Id;

@@ -1,30 +1,47 @@
 <%- include('../../fragments/header.ejs') %>
 
 <script src="../../../public/js/validationEmpForm.js" type="application/javascript"></script>
-<script type="application/javascript" src="/js/validationCommon.js"></script>
+<script type="application/javascript" src="../../../public/js/validationCommon.js"></script>
 
 <h2>
     <%= pageTitle %>
 </h2>
-<form class="form" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
+<form class="form" method="post" action="<%= formAction %>" onsubmit="return validateForm();">
     <input type="hidden" name="id" value="<%= dept.id %>">
 
     <label for="name">Nazwa:<span class="symbol-required">*</span></label>
     <input type="text" name="name" id="name" placeholder=" 2-60 znaków" value="<%= dept.DeptName %>"
-            <%= (formMode === 'showDetails') ? 'disabled' : '' %>/>
-    <span id="errorDepartmentName"></span>
+            <%= (formMode === 'showDetails') ? 'disabled' : '' %>
+           class="<%= validationErrors.find(e => e.path.includes('name')) ? 'error-input' : ''%>"/>
+
+    <span id="errorDepartmentName" class="errors-text">
+        <% if (validationErrors.find(e => e.path.includes('name'))){ %>
+            <%= validationErrors.find(e => e.path.includes('name')).message%>
+        <% }%>
+    </span>
 
     <label for="amountofEmp">Ilość Pracujących: <span class="symbol-required">*</span></label>
     <input type="number" name="amountofEmp" id="amountofEmp" placeholder=" 1-10" value="<%= dept.NumOfWorkers %>"
-            <%= (formMode === 'showDetails') ? 'disabled' : '' %>/>
-    <span id="errorAmountofEmp"></span>
+            <%= (formMode === 'showDetails') ? 'disabled' : '' %>
+           class="<%= validationErrors.find(e => e.path.includes('amountofEmp')) ? 'error-input' : ''%>"/>
+
+    <span id="errorAmountofEmp" class="errors-text">
+        <% if (validationErrors.find(e => e.path.includes('amountofEmp'))){ %>
+            <%= validationErrors.find(e => e.path.includes('amountofEmp')).message%>
+        <% }%>
+    </span>
 
     <label for="dateOfStart">Data: <span class="symbol-required">*</span></label>
     <input type="date" name="dateOfStart" id="dateOfStart" placeholder=" YYYY-MM-DD" value="<%= dept.DateOfStert %>"
-            <%= (formMode === 'showDetails') ? 'disabled' : '' %>/>
-    <span id="errorDateOfStart" class="errors-text"></span>
+            <%= (formMode === 'showDetails') ? 'disabled' : '' %>
+           class="<%= validationErrors.find(e => e.path.includes('dateOfStart')) ? 'error-input' : ''%>"/>
+    <span id="errorDateOfStart" class="errors-text">
+        <% if (validationErrors.find(e => e.path.includes('dateOfStart'))){ %>
+            <%= validationErrors.find(e => e.path.includes('dateOfStart')).message%>
+        <% }%>
+    </span>
 
-    <% if (formMode != 'showDetails') { %>
+    <% if (formMode !== 'showDetails') { %>
         <input type="submit" class="button" value="Dodaj"/>
         <a class="button" href="/departments">Anuluj</a>
     <% } %>

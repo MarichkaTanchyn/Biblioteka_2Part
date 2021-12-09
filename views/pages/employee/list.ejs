@@ -1,5 +1,11 @@
 <%- include('../../fragments/header.ejs') %>
 
+<script>
+  function alertAfterDelete(){
+    if(confirm("Czy napewno chcesz usunąć Zatrudnienie?"))
+      alert("Usunałeś pracownika!");
+  }
+</script>
 <h2>
   <%= pageTitle %>
 </h2>
@@ -28,7 +34,7 @@
           <a class="button-edit" href="/employees/edit/<%=emp.Employee_id %>">Edytuj</a>
         </li>
         <li>
-          <a class="button-delete" href="/employees/delete/<%=emp.Employee_id %>">Usuń</a>
+          <a class="button-delete" href="/employees/delete/<%=emp.Employee_id %>" onclick="alertAfterDelete();" >Usuń</a>
         </li>
       </ul>
     </td>
