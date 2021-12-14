@@ -84,7 +84,7 @@ exports.updateDept = async (req, res, next) => {
         res.redirect('/departments');
     } catch(err) {
             res.render('pages/department/form', {
-                emp: empData,
+                dept: deptData,
                 pageTitle: "Edycja Departaments",
                 formMode: 'edit',
                 formAction: '/departments/edit',

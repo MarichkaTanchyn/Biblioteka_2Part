@@ -1,14 +1,14 @@
 <%- include('../../fragments/header.ejs') %>
 
-<script src="../../../public/js/validationEmpForm.js" type="application/javascript"></script>
-<script type="application/javascript" src="../../../public/js/validationCommon.js"></script>
+<!--<script src="../../../public/js/validationEmpForm.js" type="application/javascript"></script>-->
+<!--<script type="application/javascript" src="../../../public/js/validationCommon.js"></script>-->
 
 <h2>
     <%= pageTitle %>
 </h2>
 
 <form class="form" method="POST" action="<%= formAction %>" onsubmit="validateForm();">
-    <input type="hidden" name="empId" value="<%= emp.empId %>">
+
 
 
     <label for="Name">Imię:<span class="symbol-required">*</span></label>
@@ -70,7 +70,7 @@
         </tr>
         </thead>
         <tbody>
-        <% for(let e of emp.employees) { %>
+        <% for(let e of emp.employments) { %>
             <tr>
                 <td><a href="/departments/details/<%= e.department._id %>"><%= e.department.DeptName %></a></td>
                 <td><%= e.DataOd.toISOString().split('T')[0] %></td>

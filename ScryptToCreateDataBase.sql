@@ -7,7 +7,7 @@ CREATE TABLE Department (
     Dept_id int NOT NULL AUTO_INCREMENT,
     Name varchar(50) NOT NULL,
     NumOfWorkers int NOT NULL,
-    DateOfStert date NOT NULL,
+    DateOfStart date NOT NULL,
     CONSTRAINT Department_pk PRIMARY KEY (Dept_id)
 );
 
@@ -52,7 +52,7 @@ INSERT into Employee(Name,LastName,Email) VALUES
 ('Max', 'Dubakow', 'maxdubakow@gmail.com'),
 ('Poliana', 'Kryaczenko', 'poliaaaaaa@gmail.com');
 
-INSERT into Department(Name,NumOfWorkers,DateOfStert) VALUES
+INSERT into Department(Name,NumOfWorkers,DateOfStart) VALUES
 ('Liryk',3,'2020-02-01'),
 ('Dramat',3,'2010-01-11'),
 ('Epos',3,'2020-12-31');

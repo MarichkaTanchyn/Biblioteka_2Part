@@ -8,7 +8,6 @@
 </h2>
 
 <form class="form" method="post" action="<%= formAction %>" novalidate>
-    <input type="hidden" name="empl_id" value="<%= empl.id %>">
 
     <label for="deptName">Department:<span class="symbol-required">*</span></label>
     <select name="deptId" id="dept" <%= (formMode === 'showDetails') ? 'disabled' : '' %>>

@@ -7,7 +7,7 @@
     <%= pageTitle %>
 </h2>
 <form class="form" method="post" action="<%= formAction %>" onsubmit="return validateForm();">
-    <input type="hidden" name="id" value="<%= dept.id %>">
+
 
     <label for="name">Nazwa:<span class="symbol-required">*</span></label>
     <input type="text" name="name" id="name" placeholder=" 2-60 znaków" value="<%= dept.DeptName %>"
@@ -32,7 +32,7 @@
     </span>
 
     <label for="dateOfStart">Data: <span class="symbol-required">*</span></label>
-    <input type="date" name="dateOfStart" id="dateOfStart" placeholder=" YYYY-MM-DD" value="<%= dept.DateOfStert %>"
+    <input type="date" name="dateOfStart" id="dateOfStart" placeholder=" YYYY-MM-DD" value="<%= dept.DateOfStart %>"
             <%= (formMode === 'showDetails') ? 'disabled' : '' %>
            class="<%= validationErrors.find(e => e.path.includes('dateOfStart')) ? 'error-input' : ''%>"/>
     <span id="errorDateOfStart" class="errors-text">
