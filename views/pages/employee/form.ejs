@@ -2,6 +2,24 @@
 
 <!--<script src="../../../public/js/validationEmpForm.js" type="application/javascript"></script>-->
 <!--<script type="application/javascript" src="../../../public/js/validationCommon.js"></script>-->
+<% if (!loggedUser) { %>
+    <div id="login">
+        <h5>Logowanie</h5>
+        <form method="post" action="/login">
+            <label for="loginEmail">Email:</label>
+            <input type="email" id="loginEmail" name="loginEmail">
+
+            <label for="Password">Hasło:</label>
+            <input type="password" id="loginPassword" name="loginPassword">
+
+            <input type="submit" value="Zaloguj się">
+            <span id="loginErrors"><%= loginError ? loginError : '' %></span>
+        </form>
+    </div>
+<% }else { %>
+    <span>Zalogowany jako: <%= loggedUser.name %> </span>
+    <a href="/logout">Wyloguj</a>
+<% } %>
 
 <h2>
     <%= pageTitle %>
@@ -9,38 +27,48 @@
 
 <form class="form" method="POST" action="<%= formAction %>" onsubmit="validateForm();">
 
-
-
     <label for="Name">Imię:<span class="symbol-required">*</span></label>
-    <input type="text" name="Name" id="Name" placeholder="2-60 znaków" value="<%= emp.Name %>"
+    <input type="text" name="Name" id="Name"
+           placeholder="2-60 znaków"
+           value="<%= emp.Name %>"
             <%= (formMode === 'showDetails') ? 'disabled' : '' %>
-           class="<%= validationErrors.find(e => e.path.includes('Name')) ? 'error-input' : ''%>"
+           class="<%= validationErrors.find(e => e.path.includes('Name')) ? 'error-input' : '' %>"
     />
     <span id="errorFirstName" class="errors-text">
         <% if (validationErrors.find(e => e.path.includes('Name'))){ %>
-        <%= validationErrors.find(e => e.path.includes('Name')).message%>
-        <% }%>
+            <%= validationErrors.find(e => e.path.includes('Name')).message %>
+        <% } %>
     </span>
 
     <label for="LastName">Nazwisko: <span class="symbol-required">*</span></label>
     <input type="text" name="LastName" id="LastName" placeholder="2-60 znaków" value="<%= emp.LastName %>"
             <%= (formMode === 'showDetails') ? 'disabled' : '' %>
-           class="<%= validationErrors.find(e => e.path.includes('LastName')) ? 'error-input' : ''%>"/>
+           class="<%= validationErrors.find(e => e.path.includes('LastName')) ? 'error-input' : '' %>"/>
     <span id="errorLastName" class="errors-text">
         <% if (validationErrors.find(e => e.path.includes('LastName'))){ %>
-            <%= validationErrors.find(e => e.path.includes('LastName')).message%>
-        <% }%>
+            <%= validationErrors.find(e => e.path.includes('LastName')).message %>
+        <% } %>
     </span>
 
     <label for="Email">E-mail: <span class="symbol-required">*</span></label>
     <input input="Email" name="Email" id="Email" placeholder="np.: nazwa@domena.pl" value="<%= emp.Email %>"
             <%= (formMode === 'showDetails') ? 'disabled' : '' %>
-    class="<%= validationErrors.find(e => e.path.includes('Email')) ? 'error-input' : ''%>"
+           class="<%= validationErrors.find(e => e.path.includes('Email')) ? 'error-input' : '' %>"
     />
     <span id="errorEmail" class="errors-text">
         <% if (validationErrors.find(e => e.path.includes('Email'))){ %>
-            <%= validationErrors.find(e => e.path.includes('Email')).message%>
-        <% }%>
+            <%= validationErrors.find(e => e.path.includes('Email')).message %>
+        <% } %>
+    </span>
+    <label for="Password">Password: <span class="symbol-required">*</span></label>
+    <input name="Password" id="Password" value="<%= emp.Password %>" type="password"
+            <%= (formMode === 'showDetails') ? 'disabled' : '' %>
+           class="<%= validationErrors.find(e => e.path.includes('Password')) ? 'error-input' : '' %>"
+    />
+    <span id="errorPassword" class="errors-text">
+        <% if (validationErrors.find(e => e.path.includes('Password'))){ %>
+            <%= validationErrors.find(e => e.path.includes('Password')).message %>
+        <% } %>
     </span>
 
     <% if (formMode !== 'showDetails') { %>
@@ -49,10 +77,8 @@
 
     <% } %>
 </form>
-<% if (formMode === 'showDetails') {
-    console.log(emp.empId);
-%>
-<a class="button" href="/employees/edit/<%= emp.empId %>">Edytuj</a>
+<% if (formMode === 'showDetails') { %>
+    <a class="button" href="/employees/edit/<%= emp.empId %>">Edytuj</a>
 <% } %>
 
 

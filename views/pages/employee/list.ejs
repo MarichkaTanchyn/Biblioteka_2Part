@@ -1,46 +1,70 @@
 <%- include('../../fragments/header.ejs') %>
 
 <script>
-  function alertAfterDelete(){
-    if(confirm("Czy napewno chcesz usunąć Zatrudnienie?"))
-      alert("Usunałeś pracownika!");
-  }
+    function alertAfterDelete() {
+        if (confirm("Czy napewno chcesz usunąć Zatrudnienie?"))
+            alert("Usunałeś pracownika!");
+    }
 </script>
+<%if (!loggedUser) {%>
+    <div id="login">
+        <h5>Logowanie</h5>
+        <form method="post" action="/login" >
+            <label for="loginEmail">Email:</label>
+            <input type="email" id="loginEmail" name="loginEmail">
+
+            <label for="Password">Hasło:</label>
+            <input type="password" id="loginPassword" name="loginPassword">
+
+            <input type="submit" value="Zaloguj się">
+            <span id="loginErrors"><%= loginError ? loginError : ''%></span>
+        </form>
+    </div>
+<% }else {%>
+    <span>Zalogowany jako: <%= loggedUser.name %> </span>
+    <a href="/logout">Wyloguj</a>
+<% } %>
+
+
 <h2>
-  <%= pageTitle %>
+    <%= pageTitle %>
 </h2>
 
 <table class="table-list">
-  <thead>
-  <tr>
-    <th scope="col">Imię</th>
-    <th scope="col">Nazwisko</th>
-    <th scope="col">E-mail</th>
-    <th scope="col">Akcje</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% for (let emp of emps) { %>
-  <tr>
-    <td><%= emp.Name %></td>
-    <td><%= emp.LastName %></td>
-    <td><%= emp.Email %></td>
-    <td>
-      <ul class="list-actions">
-        <li>
-          <a class="button-details" href="/employees/details/<%=emp.Employee_id%>">Szczegóły</a>
-        </li>
-        <li>
-          <a class="button-edit" href="/employees/edit/<%=emp.Employee_id %>">Edytuj</a>
-        </li>
-        <li>
-          <a class="button-delete" href="/employees/delete/<%=emp.Employee_id %>" onclick="alertAfterDelete();" >Usuń</a>
-        </li>
-      </ul>
-    </td>
-  </tr>
-  <% } %>
-  </tbody>
+    <thead>
+    <tr>
+        <th scope="col">Imię</th>
+        <th scope="col">Nazwisko</th>
+        <th scope="col">E-mail</th>
+        <th scope="col">Akcje</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for (let emp of emps) { %>
+        <tr>
+            <td><%= emp.Name %></td>
+            <td><%= emp.LastName %></td>
+            <td><%= emp.Email %></td>
+            <td>
+                <ul class="list-actions">
+                    <li>
+                        <a class="button-details" href="/employees/details/<%= emp.Employee_id %>">Szczegóły</a>
+                    </li>
+                    <% if(loggedUser) {%>
+                    <li>
+                        <a class="button-edit" href="/employees/edit/<%= emp.Employee_id %>">Edytuj</a>
+                    </li>
+                    <li>
+                        <a class="button-delete" href="/employees/delete/<%= emp.Employee_id %>"
+                           onclick="alertAfterDelete();">Usuń</a>
+                    </li>
+                    <% } %>
+                </ul>
+            </td>
+        </tr>
+    <% } %>
+
+    </tbody>
 </table>
 <p class="button-submit"><a class="a-in-button" href="/employees/add">Dodaj nowego pracownika</a></p>
 

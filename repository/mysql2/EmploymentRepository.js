@@ -105,14 +105,12 @@ exports.createEmployment = async (newEmploymentData) => {
         //     console.log(newEmploymentData.telNum);
         //     return Promise.reject(vRes.error);
         // }
-        console.log(newEmploymentData);
         const emp_Id = newEmploymentData.emp_Id;
         const dept_Id = newEmploymentData.deptId;
         const dataOd = newEmploymentData.DataOd;
         const phoneNumber = newEmploymentData.telNum;
         const sql = "SELECT COUNT(*) as count FROM Employment WHERE Employee_id = ? And Dept_id = ?;";
         const count = await dbHandler.query(sql, [emp_Id, dept_Id]);
-        console.log(count);
         if (count[0]['count'] > 0) {
             throw Error();
         }

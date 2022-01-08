@@ -24,7 +24,7 @@ exports.getDepartmentsById = (req, res, next) => {
         });
 };
 exports.createDepartment = (req, res, next) => {
-    console.log(req.body);
+
     DeptRepository.createDepartment(req.body)
         .then(newobj => {
             res.status(201).json(newObj);

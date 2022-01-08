@@ -61,6 +61,7 @@ exports.showEditEmployee = (req, res, next) => {
 
 exports.addEmployee = async (req, res, next) => {
     const empData = {...req.body};
+    console.log(empData);
     try {
         await repository.createEmployee(empData)
         res.redirect('/employees');
@@ -80,8 +81,7 @@ exports.addEmployee = async (req, res, next) => {
 exports.updateEmployee = async (req, res, next) => {
     const empData = {...req.body};
     const empId = req.body.empId;
-    console.log(empData);
-    console.log(empId);
+
 
     try {
         await repository.updateEmployee(empId, empData);

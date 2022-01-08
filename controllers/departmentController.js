@@ -77,8 +77,7 @@ exports.addDept = async (req, res, next) => {
 exports.updateDept = async (req, res, next) => {
     const deptData = {...req.body};
     const deptId = req.body.id;
-    console.log(deptData);
-    console.log(deptId);
+
     try{
         await repository.updateDepartment(deptId, deptData);
         res.redirect('/departments');

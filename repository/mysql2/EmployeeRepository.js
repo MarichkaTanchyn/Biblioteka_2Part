@@ -1,5 +1,6 @@
 const dbHandler = require('../../util/db');
 const empSchema = require('../../model/joi/Employee');
+const authUtils = require('../../util/authUtils')
 
 exports.getEmployees = async () => {
     try {
@@ -19,7 +20,7 @@ exports.getEmployees = async () => {
 exports.getEmployeeById = async (empId) => {
     try {
         const query =
-            "SELECT e.Employee_id as id, e.Name as EmpName, e.LastName, e.Email, empl.Employment_id as empl_id, " +
+            "SELECT e.Employee_id as id, e.Name as EmpName, e.LastName, e.Email, e.Password, empl.Employment_id as empl_id, " +
             "empl.PhoneNumber, empl.DataOd, empl.Dept_id as dept_id, dept.Name as DeptName, dept.NumOfWorkers, dept.DateOfStart " +
             "FROM Employee e " +
             "LEFT JOIN Employment empl on empl.Employee_id = e.Employee_id " +
@@ -38,6 +39,7 @@ exports.getEmployeeById = async (empId) => {
             Name: firstRow.EmpName,
             LastName: firstRow.LastName,
             Email: firstRow.Email,
+            Password: firstRow.Password,
             employments: []
         }
 
@@ -85,8 +87,10 @@ exports.createEmployee = async (newEmployeeData) => {
         const EmpName = newEmployeeData.Name;
         const LastName = newEmployeeData.LastName;
         const Email = newEmployeeData.Email;
-        const sql = "INSERT INTO Employee (Name, LastName, Email) VALUES (?,?,?);"
-        return dbHandler.execute(sql, [EmpName, LastName, Email]);
+        const Salt = authUtils.genSaltSync(8);
+        const Password = authUtils.hashPassword(newEmployeeData.Password, Salt);
+        const sql = "INSERT INTO Employee (Name, LastName, Email, Password) VALUES (?,?,?,?);"
+        return dbHandler.execute(sql, [EmpName, LastName, Email, Password]);
 
     } catch (err) {
         return Promise.reject({
@@ -139,6 +143,22 @@ exports.deleteEmployee = async (employeeId) => {
             }]
         });
     }
+}
+exports.findByEmail = async (email) => {
+    try {
+        const sql = 'SELECT * FROM Employee where Email = ?';
+        const result =  await dbHandler.execute(sql, [email]);
+        return result[0];
+    } catch (err) {
+        return Promise.reject({
+            details: [{
+                message: 'Something went wrong with database query',
+                path: 'DB',
+                type: 'Database Error'
+            }]
+        });
+    }
+
 }
 
 checkEmailUnique = async (email) => {

@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const session = require('express-session');
 
 var indexRouter = require('./routes/index');
 const employeeRouter = require('./routes/employeeRoute');
@@ -25,10 +26,27 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+    secret: "my_secret_password",
+    resave: false,
+    saveUninitialized : true
+}));
+app.use((req, res, next) => {
+    const loggedUser = req.session.loggedUser;
+    res.locals.loggedUser = loggedUser;
+    if (!res.locals.loginError) {
+        res.locals.loginError = undefined;
+    }
+    next();
+});
+app.use(cookieParser('secret'));
+
 app.use('/', indexRouter);
-app.use('/employees', employeeRouter);
+
+app.use('/employees',  employeeRouter);
 app.use('/departments', departmentRouter);
 app.use('/employments', employmentRouter);
+
 app.use('/api/employees', empApiRouter);
 app.use('/api/employments', emplApiRouter);
 app.use('/api/departments', deptApiRouter);
@@ -49,5 +67,7 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
+
+
 
 module.exports = app;

@@ -91,7 +91,7 @@ exports.updateEmployment = async (req, res, next) => {
     const emplId = req.body.empl_id;
     try{
         await repositoryEMPL.updateEmployment(emplId, empData);
-        console.log(empData);
+
         res.redirect('/employments');
     } catch(err) {
             res.render('pages/employment/form', {

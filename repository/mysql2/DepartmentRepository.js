@@ -111,7 +111,7 @@ exports.getDepartmentById = async (deptId) => {
 
 exports.createDepartment = async (newDepartmentData) => {
     try {
-        console.log(newDepartmentData);
+
         const vRes = deptSchema.validate(newDepartmentData, {abortEarly: false});
         if (vRes.error) {
             return Promise.reject(vRes.error);

@@ -2,8 +2,6 @@ const db = require("../config/mysql2/db");
 
 exports.execute = async (statement, params) => {
     try {
-        console.log(statement);
-        console.log(params);
         if (params === undefined) {
             params = [];
         }

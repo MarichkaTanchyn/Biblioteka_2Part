@@ -1,5 +1,7 @@
 const Joi =
     require('joi');
+const authUtil = require('../../util/authUtils');
+const passHash = authUtil.hashPassword('12345');
 
 const errMessages = (errors) => {
     errors.forEach(err => {
@@ -40,6 +42,9 @@ const empSchema = Joi.object({
         .email()
         .required()
         .error(errMessages),
+    Password: Joi.string()
+        .required()
+        .error(errMessages)
 });
 
 
