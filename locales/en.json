@@ -1,0 +1,67 @@
+{
+	"main-page": {
+		"content": "Main Page",
+		"loginEmail": "Email:",
+		"loginPassword": "Password:",
+		"loggedIn": "Logged in as: ",
+		"logOut": "Log Out",
+		"login": "Login",
+		"info": "The site is currently in English."
+	},
+	"nav": {
+		"main-page": "Main page",
+		"employees": "Employees",
+		"departments": "Departments",
+		"employments": "Employments"
+	},
+	"list": {
+		"actions": {
+			"title": "Actions",
+			"details": "Details",
+			"edit": "Edit",
+			"delete": "Delete"
+		}
+	},
+	"form": {
+		"actions": {
+			"return": "Return",
+			"edit": "Edit",
+			"cancel": "Cancel"
+		}
+	},
+	"emp": {
+		"fields": {
+			"firstName": "First name",
+			"lastName": "Last name",
+			"email": "Email"
+		},
+		"list": {
+			"title": "Employees",
+			"addNew": "Add new employee",
+			"noData": "No employees in database",
+			"pageTitle": "List of employees"
+		},
+		"form": {
+			"employment": "History of employment",
+			"add": {
+				"pageTitle": "Adding a new employee",
+				"btnLabel": "Add the employee",
+				"confirm": {
+					"header": "Confirmation",
+					"text": "The new employee has been successfully created"
+				}
+			},
+			"edit": {
+				"pageTitle": "Editing an employee",
+				"btnLabel": "Save changes",
+				"confirm": {
+					"header": "Confirmation",
+					"text": "The employee has been successfully updated"
+				}
+			}
+		},
+		"actions": {
+			"details": "emp.actions.details"
+		}
+	}
+}

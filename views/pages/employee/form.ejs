@@ -4,12 +4,12 @@
 <!--<script type="application/javascript" src="../../../public/js/validationCommon.js"></script>-->
 <% if (!loggedUser) { %>
     <div id="login">
-        <h5>Logowanie</h5>
+        <h5><%= __('main-page.login')%></h5>
         <form method="post" action="/login">
-            <label for="loginEmail">Email:</label>
+            <label for="loginEmail"> <%=__('main-page.loginEmail')%></label>
             <input type="email" id="loginEmail" name="loginEmail">
 
-            <label for="Password">Hasło:</label>
+            <label for="Password"><%=__('main-page.loginPassword')%></label>
             <input type="password" id="loginPassword" name="loginPassword">
 
             <input type="submit" value="Zaloguj się">
@@ -17,8 +17,8 @@
         </form>
     </div>
 <% }else { %>
-    <span>Zalogowany jako: <%= loggedUser.name %> </span>
-    <a href="/logout">Wyloguj</a>
+    <span><%=__('main-page.loggedIn')%> <%= loggedUser.name %> </span>
+    <a href="/logout"><%=__('main-page.loginOut')%></a>
 <% } %>
 
 <h2>

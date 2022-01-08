@@ -6,37 +6,37 @@
             alert("Usunałeś pracownika!");
     }
 </script>
-<%if (!loggedUser) {%>
+<% if (!loggedUser) { %>
     <div id="login">
-        <h5>Logowanie</h5>
-        <form method="post" action="/login" >
-            <label for="loginEmail">Email:</label>
+        <h5><%= __('main-page.login') %></h5>
+        <form method="post" action="/login">
+            <label for="loginEmail"><%= __('main-page.loginEmail') %></label>
             <input type="email" id="loginEmail" name="loginEmail">
 
-            <label for="Password">Hasło:</label>
+            <label for="Password"><%= __('main-page.loginPassword') %></label>
             <input type="password" id="loginPassword" name="loginPassword">
 
             <input type="submit" value="Zaloguj się">
-            <span id="loginErrors"><%= loginError ? loginError : ''%></span>
+            <span id="loginErrors"><%= loginError ? loginError : '' %></span>
         </form>
     </div>
-<% }else {%>
-    <span>Zalogowany jako: <%= loggedUser.name %> </span>
-    <a href="/logout">Wyloguj</a>
+<% }else { %>
+    <span><%= __('main-page.loggedIn') %> <%= loggedUser.name %> </span>
+    <a href="/logout"><%= __('main-page.logOut') %></a>
 <% } %>
 
 
 <h2>
-    <%= pageTitle %>
+    <%= __('emp.list.title') %>
 </h2>
 
 <table class="table-list">
     <thead>
     <tr>
-        <th scope="col">Imię</th>
-        <th scope="col">Nazwisko</th>
-        <th scope="col">E-mail</th>
-        <th scope="col">Akcje</th>
+        <th scope="col"><%= __('emp.fields.firstName') %></th>
+        <th scope="col"><%= __('emp.fields.lastName') %></th>
+        <th scope="col"><%= __('emp.fields.email') %></th>
+        <th scope="col"><%= __('list.actions.title') %></th>
     </tr>
     </thead>
     <tbody>
@@ -48,16 +48,18 @@
             <td>
                 <ul class="list-actions">
                     <li>
-                        <a class="button-details" href="/employees/details/<%= emp.Employee_id %>">Szczegóły</a>
+                        <a class="button-details"
+                           href="/employees/details/<%= emp.Employee_id %>"><%= __('list.actions.details') %></a>
                     </li>
-                    <% if(loggedUser) {%>
-                    <li>
-                        <a class="button-edit" href="/employees/edit/<%= emp.Employee_id %>">Edytuj</a>
-                    </li>
-                    <li>
-                        <a class="button-delete" href="/employees/delete/<%= emp.Employee_id %>"
-                           onclick="alertAfterDelete();">Usuń</a>
-                    </li>
+                    <% if(loggedUser) { %>
+                        <li>
+                            <a class="button-edit"
+                               href="/employees/edit/<%= emp.Employee_id %>"><%= __('list.actions.edit') %></a>
+                        </li>
+                        <li>
+                            <a class="button-delete" href="/employees/delete/<%= emp.Employee_id %>"
+                               onclick="alertAfterDelete();"><%= __('list.actions.delete') %></a>
+                        </li>
                     <% } %>
                 </ul>
             </td>
@@ -66,7 +68,7 @@
 
     </tbody>
 </table>
-<p class="button-submit"><a class="a-in-button" href="/employees/add">Dodaj nowego pracownika</a></p>
+<p class="button-submit"><a class="a-in-button" href="/employees/add"><%= __('emp.list.addNew')%></a></p>
 
 
 <%- include('../../fragments/footer.ejs') %>

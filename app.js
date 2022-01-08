@@ -41,6 +41,28 @@ app.use((req, res, next) => {
 });
 app.use(cookieParser('secret'));
 
+
+
+const i18n = require('i18n');
+i18n.configure({
+    locales: ['en', 'pl'], // języki dostępne w aplikacji. Dla każdego z nich należy utworzyć osobny słownik
+    directory: path.join(__dirname,'locales'), // ścieżka do katalogu, w którym znajdują się słowniki
+    defaultLocale: 'en',
+    objectNotation: true, // umożliwia korzstanie z zagnieżdżonych kluczy w notacji obiektowej
+    cookie: 'acme-hr-lang' //nazwa cookies, które nasza aplikacja będzie wykorzystywać do przechowania informacji o
+    //języku aktualnie wybranym przez użytkownika
+});
+app.use(i18n.init);
+
+
+app.use((req, res, next) => {
+    if(!res.locals.lang) {
+        const currentLang = req.cookies['acme-hr-lang'];
+        res.locals.lang = currentLang;
+    }
+    next();
+});
+
 app.use('/', indexRouter);
 
 app.use('/employees',  employeeRouter);
@@ -50,7 +72,6 @@ app.use('/employments', employmentRouter);
 app.use('/api/employees', empApiRouter);
 app.use('/api/employments', emplApiRouter);
 app.use('/api/departments', deptApiRouter);
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -67,7 +88,5 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
-
-
 
 module.exports = app;
