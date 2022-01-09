@@ -1,43 +1,67 @@
 <%- include('../../fragments/header.ejs') %>
 <script>
-  function alertAfterDelete(){
-    if(confirm("Czy napewno chcesz usunąć Departament?"))
-      alert("Usunałeś departament!");
-  }
+    function alertAfterDelete() {
+        if (confirm("Czy napewno chcesz usunąć Departament?"))
+            alert("Usunałeś departament!");
+    }
 </script>
-  <h2>
-    <%= pageTitle %>
-  </h2>
-  <table class="table-list">
+
+<% if (!loggedUser) { %>
+    <div id="login">
+        <h5><%= __('main-page.login') %></h5>
+        <form method="post" action="/login">
+            <label for="loginEmail"><%= __('main-page.loginEmail') %></label>
+            <input type="email" id="loginEmail" name="loginEmail">
+
+            <label for="Password"><%= __('main-page.loginPassword') %></label>
+            <input type="password" id="loginPassword" name="loginPassword">
+
+            <input type="submit" value=<%= __('main-page.login') %>>
+            <span id="loginErrors"><%= loginError ? loginError : '' %></span>
+        </form>
+    </div>
+<% }else { %>
+    <span><%= __('main-page.loggedIn') %> <%= loggedUser.Name %>  <%= loggedUser.LastName %></span>
+    <a href="/logout"><%= __('main-page.logOut') %></a>
+<% } %>
+
+
+<h2>
+    <%= __('dept.list.title') %>
+</h2>
+<table class="table-list">
     <thead>
-      <tr>
-        <th scope="col">Nazwa</th>
-        <th scope="col">Data stworzenia</th>
-        <th scope="col">Akcje</th>
-      </tr>
+    <tr>
+        <th scope="col"><%= __('dept.fields.name') %></th>
+        <th scope="col"><%= __('dept.fields.dateOfCreate') %></th>
+        <th scope="col"><%= __('dept.fields.actions') %></th>
+    </tr>
     </thead>
     <tbody>
     <% for (const dept of deps) { %>
-      <tr>
-        <td><%= dept.Name %></td>
-        <td><%= dept.DateOfStart.toISOString().split('T')[0] %></td>
-        <td>
-          <ul class="list-actions">
-            <li>
-              <a class="button-details" href="/departments/details/<%= dept.Dept_id %>">Szczegóły</a>
-            </li>
-            <li>
-              <a class="button-edit" href="/departments/edit/<%= dept.Dept_id %>">Edytuj</a>
-            </li>
-            <li>
-              <a class="button-delete" href="/departments/delete/<%= dept.Dept_id %>" onclick="alertAfterDelete();">Usuń</a>
-            </li>
-          </ul>
-        </td>
-      </tr>
+        <tr>
+            <td><%= dept.Name %></td>
+            <td><%= dept.DateOfStart.toISOString().split('T')[0] %></td>
+            <td>
+                <ul class="list-actions">
+                    <li>
+                        <a class="button-details"
+                           href="/departments/details/<%= dept.Dept_id %>"><%= __('list.actions.details') %></a>
+                    </li>
+                    <li>
+                        <a class="button-edit"
+                           href="/departments/edit/<%= dept.Dept_id %>"><%= __('list.actions.edit') %></a>
+                    </li>
+                    <li>
+                        <a class="button-delete" href="/departments/delete/<%= dept.Dept_id %>"
+                           onclick="alertAfterDelete();"><%= __('list.actions.delete') %></a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
     <% } %>
     </tbody>
-  </table>
-  <p class="button-submit"><a class="a-in-button" href="/departments/add">Dodaj nowy departament</a></p>
+</table>
+<p class="button-submit"><a class="a-in-button" href="/departments/add"><%= __('dept.list.addNew') %></a></p>
 
 <%- include('../../fragments/footer.ejs') %>

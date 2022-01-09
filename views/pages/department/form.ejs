@@ -3,13 +3,32 @@
 <script src="../../../public/js/validationEmpForm.js" type="application/javascript"></script>
 <script type="application/javascript" src="../../../public/js/validationCommon.js"></script>
 
+<% if (!loggedUser) { %>
+    <div id="login">
+        <h5><%= __('main-page.login')%></h5>
+        <form method="post" action="/login">
+            <label for="loginEmail"> <%=__('main-page.loginEmail')%></label>
+            <input type="email" id="loginEmail" name="loginEmail">
+
+            <label for="Password"><%=__('main-page.loginPassword')%></label>
+            <input type="password" id="loginPassword" name="loginPassword">
+
+            <input type="submit" value=<%=__('main-page.login')%>>
+            <span id="loginErrors"><%= loginError ? loginError : '' %></span>
+        </form>
+    </div>
+<% }else { %>
+<span><%=__('main-page.loggedIn')%> <%= loggedUser.name %> </span>
+<a href="/logout"><%=__('main-page.logOut')%></a>
+<% } %>
+
 <h2>
-    <%= pageTitle %>
+    <%=__('dept.list.addNew')%>
 </h2>
 <form class="form" method="post" action="<%= formAction %>" onsubmit="return validateForm();">
 
 
-    <label for="name">Nazwa:<span class="symbol-required">*</span></label>
+    <label for="name"> <%=__('dept.form.name')%><span class="symbol-required">*</span></label>
     <input type="text" name="name" id="name" placeholder=" 2-60 znaków" value="<%= dept.DeptName %>"
             <%= (formMode === 'showDetails') ? 'disabled' : '' %>
            class="<%= validationErrors.find(e => e.path.includes('name')) ? 'error-input' : ''%>"/>
@@ -20,7 +39,7 @@
         <% }%>
     </span>
 
-    <label for="amountofEmp">Ilość Pracujących: <span class="symbol-required">*</span></label>
+    <label for="amountofEmp"><%=__('dept.form.numOfWorkers')%><span class="symbol-required">*</span></label>
     <input type="number" name="amountofEmp" id="amountofEmp" placeholder=" 1-10" value="<%= dept.NumOfWorkers %>"
             <%= (formMode === 'showDetails') ? 'disabled' : '' %>
            class="<%= validationErrors.find(e => e.path.includes('amountofEmp')) ? 'error-input' : ''%>"/>
@@ -31,7 +50,7 @@
         <% }%>
     </span>
 
-    <label for="dateOfStart">Data: <span class="symbol-required">*</span></label>
+    <label for="dateOfStart"><%=__('dept.form.date')%> <span class="symbol-required">*</span></label>
     <input type="date" name="dateOfStart" id="dateOfStart" placeholder=" YYYY-MM-DD" value="<%= dept.DateOfStart %>"
             <%= (formMode === 'showDetails') ? 'disabled' : '' %>
            class="<%= validationErrors.find(e => e.path.includes('dateOfStart')) ? 'error-input' : ''%>"/>
@@ -43,29 +62,29 @@
 
     <% if (formMode !== 'showDetails') { %>
         <input type="submit" class="button" value="Dodaj"/>
-        <a class="button" href="/departments">Anuluj</a>
+        <a class="button" href="/departments"><%=__('form.actions.cancel')%></a>
     <% } %>
 </form>
 
 </form>
 
 <% if (formMode === 'showDetails') { %>
-    <a class="button" href="/departments/edit/<%= dept.id %>">Edytuj</a>
+    <a class="button" href="/departments/edit/<%= dept.id %>"><%=__('form.actions.edit')%></a>
 <% } %>
 
 
 <% if (formMode === 'showDetails' || formMode === 'edit') { %>
     <% if (dept.employments.length > 0){ %>
         <h2>
-            <%= pageTitle %>
+            <%=__('dept.form.edit.pageTitle')%>
         </h2>
         <table class="table-list">
             <thead>
             <tr>
-                <th>Imie</th>
-                <th>Nazwisko</th>
-                <th>Numer Telefonu</th>
-                <th>Data Od</th>
+                <th><%=__('emp.form.firstName')%></th>
+                <th><%=__('emp.form.lastName')%></th>
+                <th><%=__('emp.form.phoneNumber')%></th>
+                <th><%=__('emp.form.date')%></th>
             </tr>
             </thead>
             <tbody>
@@ -84,7 +103,7 @@
         </table>
     <% } %>
     <% if (formMode === 'showDetails') { %>
-        <a class="button" href="/departments">Powrót</a>
+        <a class="button" href="/departments"><%=__('form.actions.return')%></a>
 
 
     <% } %>

@@ -87,14 +87,19 @@
 			"pageTitle": "Lista departamentów"
 		},
 		"form": {
-			"employment": "Historia zatrudnienia",
+			"employment": "Historia departamentów",
+			"name": "Nazwa:",
+			"numOfWorkers": "Ilość Pracujących:",
+			"date": "Data Zatrudnienia:",
+			"phoneNumber": "Numer Telefonu:",
 			"add": {
-				"pageTitle": "Dodawanie pracownika",
-				"btnLabel": "Dodaj pracownika",
+				"pageTitle": "Dodawanie departamenta",
+				"btnLabel": "Dodaj departamen",
 				"confirm": {
 					"header": "Potwierdzenie operacji",
-					"text": "Pomyślnie dodano pracownika"
-				}
+					"text": "Pomyślnie dodano departament"
+				},
+				"bntLabel": "dept.form.add.bntLabel"
 			},
 			"edit": {
 				"pageTitle": "Edycja pracownika",
@@ -108,33 +113,42 @@
 	},
 	"employment": {
 		"fields": {
+			"department": "Departament",
 			"firstName": "Imię",
 			"lastName": "Nazwisko",
-			"email": "Email",
+			"phoneNumber": "Numer Telefonu",
+			"dateOfEmployment": "Data Zatrudnienia",
 			"actions": "Akcje"
 		},
 		"list": {
-			"title": "Pracownicy",
-			"addNew": "Dodaj nowego pracownika",
-			"noData": "Brak pracowników w bazie",
-			"pageTitle": "Lista pracowników"
+			"title": "Zatrudnienia",
+			"addNew": "Dodaj nowe zatrudnienie",
+			"noData": "Brak zatrudnień w bazie",
+			"pageTitle": "Lista zatrudnień"
 		},
 		"form": {
 			"employment": "Historia zatrudnienia",
+			"firstName": "Imie",
+			"lastName": "Nazwisko",
+			"department": "Departament: ",
+			"employee": "Pracownik: ",
+			"phoneNumber": "Numer Telefonu: ",
+			"date": "Data: ",
 			"add": {
-				"pageTitle": "Dodawanie pracownika",
-				"btnLabel": "Dodaj pracownika",
+				"pageTitle": "Dodawanie zatrudnienia",
+				"btnLabel": "Dodaj zatrudnienie",
 				"confirm": {
 					"header": "Potwierdzenie operacji",
-					"text": "Pomyślnie dodano pracownika"
-				}
+					"text": "Pomyślnie dodano zatrudnienie"
+				},
+				"bntLabel": "employment.form.add.bntLabel"
 			},
 			"edit": {
-				"pageTitle": "Edycja pracownika",
+				"pageTitle": "Edycja zatrudnienia",
 				"btnLabel": "Zapisz zmiany",
 				"confirm": {
 					"header": "Potwierdzenie operacji",
-					"text": "Pomyślnie zaktualizowano pracownika"
+					"text": "Pomyślnie zaktualizowano zatrudnienie"
 				}
 			}
 		}

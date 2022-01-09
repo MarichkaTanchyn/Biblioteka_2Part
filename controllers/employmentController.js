@@ -9,7 +9,7 @@ exports.showEmploymentList = (req, res, next) => {
             res.render('pages/employment/list', {
                 empls: empls,
                 navLocation: 'employment',
-                pageTitle: "Lista Zatrudnień",
+                pageTitle: req.__('employment.list.pageTitle'),
             });
     });
 }
@@ -18,10 +18,10 @@ exports.showAddEmploymentForm = async (req, res, next) => {
     const departments = await repositoryDept.getDepartments();
     const empById = await repositoryEMPL.getEmploymentById(req.params.emplId);
     res.render('pages/employment/form', {
-        pageTitle: 'Dodaj Zatrudnienie',
+        pageTitle: req.__('employment.form.add.pageTitle'),
         formMode: 'createNew',
         formAction: '/employments/add' ,
-        btnLabel: "Dodaj Zatrudnienie",
+        btnLabel: req.__('employment.form.add.bntLabel'),
         employees: employees,
         departments: departments,
         empl: empById,
@@ -38,7 +38,7 @@ exports.showEmploymentDetails = async (req, res, next) => {
             formAction: '',
             formMode: "showDetails",
             empl: empById,
-            pageTitle: "Szczegóły Zatrudnienia",
+            pageTitle: req.__('employment.form.edit.pageTitle'),
             depts: deptWithEmp,
             employees: employees,
             departments: departments,
@@ -57,7 +57,7 @@ exports.showEditEmployment = async (req, res, next) => {
         formAction: '/employments/edit',
         formMode: "edit",
         empl: empById,
-        pageTitle: "Edytuj Zatrudnienie",
+        pageTitle: req.__('employment.form.edit.pageTitle'),
         depts: deptWithEmp,
         employees: employees,
         departments: departments,
@@ -71,13 +71,14 @@ exports.addEmployment = async (req, res, next) => {
     const emplData = {...req.body};
     try{
         await repositoryEMPL.createEmployment(emplData);
+        console.log(emplData);
         res.redirect('/employments');
     }catch(err) {
             res.render('pages/employment/form', {
                 empl: emplData,
-                pageTitle: "Dodawanie Zatrudnienia",
+                pageTitle: req.__('employment.form.add.pageTitle'),
                 formMode: 'createNew',
-                bntLabel: 'Dodaj Zatrudnienie',
+                bntLabel: req.__('employment.form.add.bntLabel'),
                 formAction: '/employments/add',
                 validationErrors: err.details,
                 employees: employees,
@@ -91,15 +92,14 @@ exports.updateEmployment = async (req, res, next) => {
     const emplId = req.body.empl_id;
     try{
         await repositoryEMPL.updateEmployment(emplId, empData);
-
         res.redirect('/employments');
     } catch(err) {
             res.render('pages/employment/form', {
                 empl: empData,
-                pageTitle: "Edycja Pracownika",
+                pageTitle: req.__('employment.form.edit.pageTitle'),
                 formMode: 'edit',
                 formAction: '/employments/edit',
-                bntLabel: 'Zatwierdz',
+                bntLabel: req.__('employment.form.edit.bntLabel'),
                 validationErrors: err.details,
                 employees: employees,
                 departments: departments,

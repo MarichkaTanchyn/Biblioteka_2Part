@@ -36,7 +36,7 @@
 			"lastName": "Last name",
 			"email": "Email",
 			"password": "Password",
-			"actions": "Akcje",
+			"actions": "Akcje"
 		},
 		"list": {
 			"title": "Employees",

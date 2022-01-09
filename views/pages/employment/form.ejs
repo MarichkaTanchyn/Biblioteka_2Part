@@ -3,13 +3,32 @@
 <script src="../../../public/js/validationEmpForm.js" type="application/javascript"></script>
 <script type="application/javascript" src="/js/validationCommon.js"></script>
 
+<% if (!loggedUser) { %>
+    <div id="login">
+        <h5><%= __('main-page.login')%></h5>
+        <form method="post" action="/login">
+            <label for="loginEmail"> <%=__('main-page.loginEmail')%></label>
+            <input type="email" id="loginEmail" name="loginEmail">
+
+            <label for="Password"><%=__('main-page.loginPassword')%></label>
+            <input type="password" id="loginPassword" name="loginPassword">
+
+            <input type="submit" value=<%=__('main-page.login')%>>
+            <span id="loginErrors"><%= loginError ? loginError : '' %></span>
+        </form>
+    </div>
+<% }else { %>
+<span><%=__('main-page.loggedIn')%> <%= loggedUser.name %> </span>
+<a href="/logout"><%=__('main-page.logOut')%></a>
+<% } %>
+
 <h2>
-    <%= pageTitle %>
+    <%=__('employment.list.addNew')%>
 </h2>
 
 <form class="form" method="post" action="<%= formAction %>" novalidate>
 
-    <label for="deptName">Department:<span class="symbol-required">*</span></label>
+    <label for="deptName"><%=__('employment.form.department')%><span class="symbol-required">*</span></label>
     <select name="deptId" id="dept" <%= (formMode === 'showDetails') ? 'disabled' : '' %>>
 
         <% for (var j = 0; j < departments.length; j++) { %>
@@ -19,7 +38,7 @@
     </select>
     <span id="errorDepartment"></span>
 
-    <label for="empName">Pracownik:<span class="symbol-required">*</span></label>
+    <label for="empName"><%=__('employment.form.employee')%><span class="symbol-required">*</span></label>
     <select name="emp_Id" id="employee" <%= (formMode === 'showDetails') ? 'disabled' : '' %>>
         <option value="">Wybierz pracownika</option>
         <% for(let k = 0; k < employees.length; k++) {
@@ -30,7 +49,7 @@
         <% } %>
     </select>
 
-    <label for="telNum">Numer Telefonu:<span class="symbol-required">*</span></label>
+    <label for="telNum"><%=__('employment.form.phoneNumber')%><span class="symbol-required">*</span></label>
     <input type="number" name="telNum" id="telNum" placeholder="np. 729362362" value="<%= empl.PhoneNumber %>"
             <%= (formMode === 'showDetails') ? 'disabled' : '' %> />
         <span id="errorEmail"></span>
@@ -42,29 +61,29 @@
 
     <% if (formMode !== 'showDetails') { %>
         <input type="submit" class="button" value="Dodaj"/>
-        <a class="button" href="/employments">Anuluj</a>
+        <a class="button" href="/employments"><%=__('form.actions.cancel')%></a>
     <% } %>
 </form>
 
 
 <% if (formMode === 'showDetails') { %>
-    <a class="button" href="/employments/edit/<%= empl.id %>">Edytuj</a>
+    <a class="button" href="/employments/edit/<%= empl.id %>"><%=__('form.actions.edit')%></a>
 <% } %>
 
 
 <% if (formMode === 'showDetails' || formMode === 'edit') { %>
     <h2>
-        <%= pageTitle %>
+        <%=__('employment.form.edit.pageTitle')%>
     </h2>
 
     <table class="table-list">
         <thead>
         <tr>
-            <th>Departament</th>
-            <th>Imie</th>
-            <th>Nazwisko</th>
-            <th>Numer Telefonu</th>
-            <th>Data Zatrudnienia</th>
+            <th><%=__('employment.form.department')%></th>
+            <th><%=__('employment.form.firstName')%></th>
+            <th><%=__('employment.form.lastName')%></th>
+            <th><%=__('employment.form.phoneNumber')%></th>
+            <th><%=__('employment.form.date')%></th>
         </tr>
         </thead>
         <tbody>
@@ -79,7 +98,7 @@
         </tbody>
     </table>
     <% if (formMode === 'showDetails') { %>
-        <a class="button" href="/employments">Powrót</a>
+        <a class="button" href="/employments"><%=__('form.actions.return')%></a>
 
 
     <% } %>

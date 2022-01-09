@@ -8,7 +8,7 @@ exports.showDeptList = (req,res,next) => {
                 {
                     deps: deps,
                     navLocation: 'dept',
-                    pageTitle: "Lista Departamentów"
+                    pageTitle: req.__('dept.list.pageTitle'),
             });
 
         })
@@ -17,9 +17,9 @@ exports.showAddDeptForm = (req,res,next) => {
     res.render('pages/department/form',
         {
             dept: {},
-            pageTitle: "Nowy Departament",
+            pageTitle: req.__('dept.form.add.pageTitle'),
             formMode: 'createNew',
-            btnLabel: "Dodaj Departament",
+            btnLabel: req.__('dept.form.add.bntLabel'),
             formAction: '/departments/add',
             navLocation: 'dept',
             validationErrors: []
@@ -35,7 +35,7 @@ exports.showDeptDetails = (req,res,next) => {
                     formMode: 'showDetails',
                     formAction: '',
                     navLocation: 'dept',
-                    pageTitle: 'Szczegóły Departamenta',
+                    pageTitle: req.__('dept.form.add.pageTitle'),
                     validationErrors: []
                 });
         });
@@ -48,8 +48,8 @@ exports.showEditDept = (req,res,next) => {
                 {
                     dept: dept,
                     navLocation: 'dept',
-                    pageTitle: 'Edycja Departamenta',
-                    btnLabel: 'Edytuj Departamenta',
+                    pageTitle: req.__('dept.form.edit.pageTitle'),
+                    btnLabel: req.__('dept.form.edit.bntLabel'),
                     formMode: 'edit',
                     formAction: '/departments/edit',
                     validationErrors: []
@@ -65,9 +65,9 @@ exports.addDept = async (req, res, next) => {
     } catch(err) {
             res.render('pages/department/form', {
                 dept: deptData,
-                pageTitle: "Dodawanie Departamenta",
+                pageTitle: req.__('dept.form.add.pageTitle'),
                 formMode: 'createNew',
-                bntLabel: 'Dodaj Departament',
+                bntLabel: req.__('dept.form.add.bntLabel'),
                 formAction: '/departments/add',
                 validationErrors: err.details
             });
@@ -84,10 +84,10 @@ exports.updateDept = async (req, res, next) => {
     } catch(err) {
             res.render('pages/department/form', {
                 dept: deptData,
-                pageTitle: "Edycja Departaments",
+                pageTitle: req.__('dept.form.edit.pageTitle'),
                 formMode: 'edit',
                 formAction: '/departments/edit',
-                bntLabel: 'Edytuj Departament',
+                bntLabel: req.__('dept.form.edit.bntLabel'),
                 validationErrors: err.details
             });
         }
