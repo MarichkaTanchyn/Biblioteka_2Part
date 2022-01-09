@@ -12,22 +12,22 @@
             <label for="Password"><%=__('main-page.loginPassword')%></label>
             <input type="password" id="loginPassword" name="loginPassword">
 
-            <input type="submit" value="Zaloguj się">
+            <input type="submit" value=<%=__('main-page.login')%>>
             <span id="loginErrors"><%= loginError ? loginError : '' %></span>
         </form>
     </div>
 <% }else { %>
     <span><%=__('main-page.loggedIn')%> <%= loggedUser.name %> </span>
-    <a href="/logout"><%=__('main-page.loginOut')%></a>
+    <a href="/logout"><%=__('main-page.logOut')%></a>
 <% } %>
 
 <h2>
-    <%= pageTitle %>
+    <%=__('emp.list.addNew')%>
 </h2>
 
 <form class="form" method="POST" action="<%= formAction %>" onsubmit="validateForm();">
 
-    <label for="Name">Imię:<span class="symbol-required">*</span></label>
+    <label for="Name"><%=__('emp.fields.firstName')%><span class="symbol-required">*</span></label>
     <input type="text" name="Name" id="Name"
            placeholder="2-60 znaków"
            value="<%= emp.Name %>"
@@ -40,7 +40,7 @@
         <% } %>
     </span>
 
-    <label for="LastName">Nazwisko: <span class="symbol-required">*</span></label>
+    <label for="LastName"><%=__('emp.fields.lastName')%>: <span class="symbol-required">*</span></label>
     <input type="text" name="LastName" id="LastName" placeholder="2-60 znaków" value="<%= emp.LastName %>"
             <%= (formMode === 'showDetails') ? 'disabled' : '' %>
            class="<%= validationErrors.find(e => e.path.includes('LastName')) ? 'error-input' : '' %>"/>
@@ -50,7 +50,7 @@
         <% } %>
     </span>
 
-    <label for="Email">E-mail: <span class="symbol-required">*</span></label>
+    <label for="Email"><%=__('emp.fields.email')%>: <span class="symbol-required">*</span></label>
     <input input="Email" name="Email" id="Email" placeholder="np.: nazwa@domena.pl" value="<%= emp.Email %>"
             <%= (formMode === 'showDetails') ? 'disabled' : '' %>
            class="<%= validationErrors.find(e => e.path.includes('Email')) ? 'error-input' : '' %>"
@@ -60,7 +60,7 @@
             <%= validationErrors.find(e => e.path.includes('Email')).message %>
         <% } %>
     </span>
-    <label for="Password">Password: <span class="symbol-required">*</span></label>
+    <label for="Password"><%=__('emp.fields.password')%>: <span class="symbol-required">*</span></label>
     <input name="Password" id="Password" value="<%= emp.Password %>" type="password"
             <%= (formMode === 'showDetails') ? 'disabled' : '' %>
            class="<%= validationErrors.find(e => e.path.includes('Password')) ? 'error-input' : '' %>"
@@ -73,26 +73,26 @@
 
     <% if (formMode !== 'showDetails') { %>
         <input type="submit" class="button" value="<%= btnLabel %>"/>
-        <a class="button" href="/employees">Anuluj</a>
+        <a class="button" href="/employees"><%=__('form.actions.cancel')%></a>
 
     <% } %>
 </form>
 <% if (formMode === 'showDetails') { %>
-    <a class="button" href="/employees/edit/<%= emp.empId %>">Edytuj</a>
+    <a class="button" href="/employees/edit/<%= emp.empId %>"><%=__('form.actions.edit')%></a>
 <% } %>
 
 
 <% if (formMode === 'showDetails' || formMode === 'edit') { %>
     <h2>
-        <%= pageTitle %>
+        <%=__('emp.form.edit.pageTitle')%>
     </h2>
 
     <table class="table-list">
         <thead>
         <tr>
-            <th>Departament</th>
-            <th>Data Zatrudnienia</th>
-            <th>Numer Telefonu</th>
+            <th><%=__('emp.form.edit.department')%></th>
+            <th><%=__('emp.form.edit.dateOfEmployment')%></th>
+            <th><%=__('emp.form.edit.phoneNumber')%></th>
         </tr>
         </thead>
         <tbody>
@@ -106,7 +106,7 @@
         </tbody>
     </table>
     <% if (formMode === 'showDetails') { %>
-        <a class="button" href="/employees">Powrót</a>
+        <a class="button" href="/employees"><%=__('form.actions.return')%></a>
 
     <% } %>
 <% } %>

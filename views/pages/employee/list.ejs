@@ -16,12 +16,12 @@
             <label for="Password"><%= __('main-page.loginPassword') %></label>
             <input type="password" id="loginPassword" name="loginPassword">
 
-            <input type="submit" value="Zaloguj się">
+            <input type="submit" value=<%= __('main-page.login') %>>
             <span id="loginErrors"><%= loginError ? loginError : '' %></span>
         </form>
     </div>
 <% }else { %>
-    <span><%= __('main-page.loggedIn') %> <%= loggedUser.name %> </span>
+    <span><%= __('main-page.loggedIn') %> <%= loggedUser.Name %>  <%= loggedUser.LastName %></span>
     <a href="/logout"><%= __('main-page.logOut') %></a>
 <% } %>
 
@@ -68,7 +68,7 @@
 
     </tbody>
 </table>
-<p class="button-submit"><a class="a-in-button" href="/employees/add"><%= __('emp.list.addNew')%></a></p>
+<p class="button-submit"><a class="a-in-button" href="/employees/add"><%= __('emp.list.addNew') %></a></p>
 
 
 <%- include('../../fragments/footer.ejs') %>

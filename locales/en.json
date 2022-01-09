@@ -6,7 +6,8 @@
 		"loggedIn": "Logged in as: ",
 		"logOut": "Log Out",
 		"login": "Login",
-		"info": "The site is currently in English."
+		"info": "The site is currently in English.",
+		"text": "Journal \"New Library. Services, Information Technologies and Media\"    (in the years 1998-2002 and 2010-2014 \"New Library. Notebooks Monographic Scientific Society of Librarians of the University of Silesia \") is published as a semi-annual (in 2015-2019 it was published with quarterly). In 2016, the periodical became official a scientific body of the Institute of Library Science and Scientific Information Of the University of Silesia in Katowice, and from 2020 it appears under the auspices of the Institute of Cultural Sciences of the University of Silesia in Katowice. \"Nowa Biblioteka\" is announced by the Publishing House\n    Of the University of Silesia on the basis of Creative Commons (CC BY-SA 4.0) 2018, the electronic version is the reference form. \n\n Articles, announcements, reports are published in the semi-annual,reviews and discussions of research workers and library employees, information centers, archives, museums, etc., PhD students, students. The editorial office of the journal does not charge any fees from the authors for publications."
 	},
 	"nav": {
 		"main-page": "Main page",
@@ -33,7 +34,9 @@
 		"fields": {
 			"firstName": "First name",
 			"lastName": "Last name",
-			"email": "Email"
+			"email": "Email",
+			"password": "Password",
+			"actions": "Akcje",
 		},
 		"list": {
 			"title": "Employees",
@@ -49,7 +52,8 @@
 				"confirm": {
 					"header": "Confirmation",
 					"text": "The new employee has been successfully created"
-				}
+				},
+				"bntLabel": "Add"
 			},
 			"edit": {
 				"pageTitle": "Editing an employee",
@@ -57,11 +61,12 @@
 				"confirm": {
 					"header": "Confirmation",
 					"text": "The employee has been successfully updated"
-				}
+				},
+				"bntLabel": "Save changes",
+				"department": "Department",
+				"dateOfEmployment": "Date Of Employment",
+				"phoneNumber": "PhoneNumber"
 			}
-		},
-		"actions": {
-			"details": "emp.actions.details"
 		}
 	}
 }

@@ -7,7 +7,7 @@ exports.showEmployeeList = (req, res, next) => {
                 {
                     emps: emps,
                     navLocation: 'emp',
-                    // pageTitle: "Lista pracowników"
+                    pageTitle: req.__('emp.list.pageTitle'),
                 });
         });
 }
@@ -34,7 +34,7 @@ exports.showEmployeeDetails = (req, res, next) => {
                 formMode: 'showDetails',
                 formAction: '/employees/edit',
                 navLocation: 'emp',
-                pageTitle: req.__('emp.form.emp'),
+                pageTitle: req.__('emp.form.add.pageTitle'),
                 validationErrors: []
             });
     });
@@ -44,8 +44,6 @@ exports.showEditEmployee = (req, res, next) => {
     const id = req.params.empId;
     repository.getEmployeeById(id)
         .then(emp => {
-            res.redirect('/employees');
-        }).catch(err => {
         res.render('pages/employee/form',
             {
                 emp: emp,
@@ -86,7 +84,7 @@ exports.updateEmployee = async (req, res, next) => {
     } catch (err) {
         res.render('pages/employee/form', {
             emp: empData,
-            pageTitle: req.__('emp.form.emp'),
+            pageTitle: req.__('emp.form.edit.pageTitle'),
             formMode: 'edit',
             bntLabel: req.__('emp.form.edit.bntLabel'),
             formAction: '/employees/edit',

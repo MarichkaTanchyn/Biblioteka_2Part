@@ -13,9 +13,9 @@ exports.login = (req, res, next) => {
                     loginError: "Nieprawidłowy adres email lub hasło"
                 })
             } else if (authUtil.comparePasswords(password, emp[0].Password) === true) {
-                req.session.loggedUser = emp;
+                req.session.loggedUser = emp[0];
                 console.log("logedIn");
-                res.redirect('/');
+                res.redirect('/employees');
             } else {
                 res.render('index', {
                     navLocation: '',
