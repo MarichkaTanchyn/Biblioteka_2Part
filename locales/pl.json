@@ -66,12 +66,6 @@
 					"text": "Pomyślnie zaktualizowano pracownika"
 				}
 			}
-		},
-		"edit": {
-			"pageTitle": "emp.edit.pageTitle",
-			"department": "emp.edit.department",
-			"dateOfEmployment": "emp.edit.dateOfEmployment",
-			"phoneNumber": "emp.edit.phoneNumber"
 		}
 	},
 	"dept": {
@@ -87,19 +81,18 @@
 			"pageTitle": "Lista departamentów"
 		},
 		"form": {
-			"employment": "Historia departamentów",
 			"name": "Nazwa:",
 			"numOfWorkers": "Ilość Pracujących:",
 			"date": "Data Zatrudnienia:",
 			"phoneNumber": "Numer Telefonu:",
 			"add": {
 				"pageTitle": "Dodawanie departamenta",
-				"btnLabel": "Dodaj departamen",
+
 				"confirm": {
 					"header": "Potwierdzenie operacji",
 					"text": "Pomyślnie dodano departament"
 				},
-				"bntLabel": "dept.form.add.bntLabel"
+				"bntLabel":  "Dodaj departament"
 			},
 			"edit": {
 				"pageTitle": "Edycja pracownika",
@@ -141,7 +134,7 @@
 					"header": "Potwierdzenie operacji",
 					"text": "Pomyślnie dodano zatrudnienie"
 				},
-				"bntLabel": "employment.form.add.bntLabel"
+				"bntLabel": "Dodaj zatrudnienie"
 			},
 			"edit": {
 				"pageTitle": "Edycja zatrudnienia",

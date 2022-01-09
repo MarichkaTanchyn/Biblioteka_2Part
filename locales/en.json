@@ -68,5 +68,82 @@
 				"phoneNumber": "PhoneNumber"
 			}
 		}
+	},
+	"dept": {
+		"fields": {
+			"Name": "Name",
+			"dateOfCreate": "Date Of Create",
+			"actions": "Akcje",
+			"name": "dept.fields.name"
+		},
+		"list": {
+			"title": "Departments",
+			"addNew": "Add new department",
+			"noData": "No departments in database",
+			"pageTitle": "List of departments"
+		},
+		"form": {
+			"name": "Name:",
+			"numOfWorkers": "Number Of Workers:",
+			"date": "Employment Date:",
+			"phoneNumber": "Phone Number:",
+			"add": {
+				"pageTitle": "Adding a new department",
+				"bntLabel": "Add the department",
+				"confirm": {
+					"header": "Confirmation",
+					"text": "The new department has been successfully created"
+				}
+			},
+			"edit": {
+				"pageTitle": "Editing a department",
+				"btnLabel": "Save changes",
+				"confirm": {
+					"header": "Confirmation",
+					"text": "The department has been successfully updated"
+				},
+				"bntLabel": "dept.form.edit.bntLabel"
+			}
+		}
+	},
+	"employment": {
+		"fields": {
+			"department": "Department",
+			"phoneNumber": "Phone Number",
+			"dateOfEmployment": "Employment Date",
+			"actions": "Akcje",
+			"firstName": "First name",
+			"lastName": "Last name"
+		},
+		"list": {
+			"title": "Employments",
+			"addNew": "Add new employment",
+			"noData": "No employments in database",
+			"pageTitle": "List of employments"
+		},
+		"form": {
+			"firstName": "First Name",
+			"lastName": "Last Name",
+			"department": "Department: ",
+			"employee": "Employee: ",
+			"phoneNumber": "Phone Number",
+			"date": "Date: ",
+			"add": {
+				"pageTitle": "Adding a new employment",
+				"confirm": {
+					"header": "Confirmation",
+					"text": "The new employment has been successfully created"
+				},
+				"bntLabel": "Add the employment"
+			},
+			"edit": {
+				"pageTitle": "Editing an employee",
+				"btnLabel": "Save changes",
+				"confirm": {
+					"header": "Confirmation",
+					"text": "The employee has been successfully updated"
+				}
+			}
+		}
 	}
 }
